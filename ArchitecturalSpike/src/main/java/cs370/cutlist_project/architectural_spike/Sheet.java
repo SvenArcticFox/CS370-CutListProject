@@ -11,4 +11,5 @@ public class Sheet {
     private double length;
     private double thickness;
     private String material;
+    private int quantity;
 }
