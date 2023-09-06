@@ -2,7 +2,7 @@ plugins {
     id("java")
 }
 
-group = "org.example"
+group = "cs370.cutlistproject.architecturalspike"
 version = "1.0-SNAPSHOT"
 
 repositories {
