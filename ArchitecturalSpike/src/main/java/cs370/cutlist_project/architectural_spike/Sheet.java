@@ -7,7 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sheet {
-
     private double width;
     private double length;
     private double thickness;
