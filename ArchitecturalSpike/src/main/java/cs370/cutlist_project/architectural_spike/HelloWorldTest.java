@@ -1,4 +1,4 @@
-package cs370.cutlistproject.architecturalspike;
+package cs370.cutlist_project.architectural_spike;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
