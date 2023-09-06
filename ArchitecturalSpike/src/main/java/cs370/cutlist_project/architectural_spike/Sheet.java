@@ -14,4 +14,5 @@ public class Sheet {
     private int quantity;
     private double totalArea;
     private double leftOverArea;
+
 }
