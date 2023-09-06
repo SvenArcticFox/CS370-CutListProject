@@ -12,4 +12,6 @@ public class Sheet {
     private double thickness;
     private String material;
     private int quantity;
+    private double totalArea;
+    private double leftOverArea;
 }
