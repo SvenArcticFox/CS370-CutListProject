@@ -24,20 +24,20 @@ public class HelloWorldTest extends Application {
     @Override
     public void start(Stage primaryStage) {
         Sheet s = new Sheet();
-        String num = "";
-        int u = s.getQuantity();
-        String swag = Integer.toString(u);
         primaryStage.setTitle("Entry");
-        Label q = new Label(swag);
-        Label value = new Label("0");
 
+        Label value = new Label("0");
+        Label swag = new Label("This will show if the value went to the stupid fucking thing");
         TextField inp = new TextField("Enter the number of sheets you have");
 
 
         EventHandler<ActionEvent> eve = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
-                value.setText(inp.getText());
-
+                String num = inp.getText();
+                int numOfSheet = Integer.parseInt(num);
+                s.setQuantity(numOfSheet);
+                String p = Integer.toString(numOfSheet);
+                swag.setText(p);
             }
         };
         inp.setOnAction(eve);
@@ -45,13 +45,11 @@ public class HelloWorldTest extends Application {
         TilePane pane = new TilePane();
         pane.getChildren().add(value);
         pane.getChildren().add(inp);
-        pane.getChildren().add(q);
+        pane.getChildren().add(swag);
         Scene sc = new Scene(pane, 300, 200);
 
+
         primaryStage.setScene(sc);
-        num = value.getText();
-        int numOfSheet = Integer.parseInt(num);
-        s.setQuantity(numOfSheet);
 
         primaryStage.show();
     }
