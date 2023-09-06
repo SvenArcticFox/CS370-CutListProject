@@ -11,4 +11,5 @@ public class Cut {
     private double width;
     private Sheet sheet;
     private String cutPartCode;
+    private String notes;
 }
