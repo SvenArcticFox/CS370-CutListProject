@@ -3,13 +3,13 @@ package cs370.cutlist_project.architectural_spike;
 // Java program to find number
 // of bins required using
 // Best fit algorithm.
-class BestFitBinPacking
+public class BestFitBinPacking
 {
 
     // Returns number of bins
 // required using best fit
 // online algorithm
-    static int bestFit(int weight[], int n, int c)
+    private static int bestFit(int weight[], int n, int c)
     {
 
         // Initialize result (Count of bins)
@@ -60,7 +60,7 @@ class BestFitBinPacking
     // Driver code
     public static void main(String[] args)
     {
-        int []weight = { 2, 5, 4, 7, 1, 3, 8 };
+        int[] weight = { 2, 5, 4, 7, 1, 3, 8 };
         int c = 10;
         int n = weight.length;
         System.out.print("Number of bins required in Best Fit : "
