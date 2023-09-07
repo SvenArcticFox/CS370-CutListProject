@@ -9,7 +9,7 @@ public class BestFitBinPacking
     // Returns number of bins
 // required using best fit
 // online algorithm
-    private static int bestFit(int weight[], int n, int c)
+    private static int bestFit(int[] weight, int n, int c)
     {
 
         // Initialize result (Count of bins)
