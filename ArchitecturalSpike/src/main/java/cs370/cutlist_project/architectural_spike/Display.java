@@ -14,12 +14,19 @@ import javafx.stage.Stage;
 import jdk.nashorn.internal.runtime.Debug;
 import lombok.Setter;
 public class Display {
-    @Override
+
     public void Pane(Sheet s){
-        Stage secon = new Stage();
-        secon.setTitle("Display");
+        Stage secondary = new Stage();
+        secondary.setTitle("Display");
+        Label lb = new Label(Integer.toString(s.getQuantity()));
 
 
+        TilePane pan = new TilePane();
+
+        pan.getChildren().add(lb);
+        Scene sc = new Scene(pan, 400, 1080);
+        secondary.setScene(sc);
+        secondary.show();
 
     }
 

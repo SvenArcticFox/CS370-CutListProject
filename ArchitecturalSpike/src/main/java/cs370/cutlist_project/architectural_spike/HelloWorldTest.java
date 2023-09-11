@@ -62,6 +62,7 @@ public class HelloWorldTest extends Application {
                 dis.Pane(s);
             }
         };
+        stop.setOnAction(err);
 
     }
 
