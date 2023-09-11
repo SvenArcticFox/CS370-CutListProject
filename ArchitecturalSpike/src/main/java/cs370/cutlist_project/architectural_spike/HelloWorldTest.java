@@ -7,11 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import jdk.nashorn.internal.runtime.Debug;
-import lombok.Setter;
+
 
 //import java.beans.EventHandler;
 
@@ -26,10 +27,10 @@ public class HelloWorldTest extends Application {
         Sheet s = new Sheet();
         primaryStage.setTitle("Entry");
 
-        Label value = new Label("0");
-        Label swag = new Label("This will show if the value went to the stupid fucking thing");
-        TextField inp = new TextField("Enter the number of sheets you have");
+        Label swag = new Label("This will show the current value of sheets you have");
+        TextField inp = new TextField();
 
+        Button stop = new Button("When done, press this to go to the next screen");
 
         EventHandler<ActionEvent> eve = new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
@@ -43,14 +44,25 @@ public class HelloWorldTest extends Application {
         inp.setOnAction(eve);
 
         TilePane pane = new TilePane();
-        pane.getChildren().add(value);
+
         pane.getChildren().add(inp);
         pane.getChildren().add(swag);
+        pane.getChildren().add(stop);
         Scene sc = new Scene(pane, 300, 200);
 
 
         primaryStage.setScene(sc);
-
         primaryStage.show();
+        EventHandler<ActionEvent> err = new EventHandler<ActionEvent>()
+        {
+            public void handle(ActionEvent e)
+            {
+                primaryStage.close();
+                Display dis = new Display();
+                dis.Pane(s);
+            }
+        };
+
     }
+
 }
