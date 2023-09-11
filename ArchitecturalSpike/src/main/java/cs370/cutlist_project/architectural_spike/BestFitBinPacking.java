@@ -7,8 +7,8 @@ public class BestFitBinPacking
 {
 
     // Returns number of bins
-// required using best fit
-// online algorithm
+    // required using best fit
+    // online algorithm
     private static int bestFit(int[] weight, int n, int c)
     {
 
@@ -18,7 +18,7 @@ public class BestFitBinPacking
         // Create an array to store
         // remaining space in bins
         // there can be at most n bins
-        int []bin_rem = new int[n];
+        int[] bin_rem = new int[n];
 
         // Place items one by one
         for (int i = 0; i < n; i++)
