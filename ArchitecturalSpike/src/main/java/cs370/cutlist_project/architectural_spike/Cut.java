@@ -11,4 +11,16 @@ public class Cut {
     private double width;
     private Sheet sheet;
     private String cutPartCode;
+    private double area;
+
+    public Cut(double length, double width) {
+        this.length = length;
+        this.width = width;
+        area = length * width;
+
+    }
+
+    public double getArea() {
+        return area;
+    }
 }
