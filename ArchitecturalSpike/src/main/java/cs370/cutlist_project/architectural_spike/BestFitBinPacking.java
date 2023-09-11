@@ -61,11 +61,14 @@ public class BestFitBinPacking
     public static void main(String[] args)
     {
         int[] weight = { 2, 5, 4, 7, 1, 3, 8 };
-        int c = 10;
+        int c = 10; // specifies the container size
         int n = weight.length;
-        System.out.print("Number of bins required in Best Fit : "
+        System.out.println("Number of bins required in Best Fit: "
                 + bestFit(weight, n, c));
+        int[] weight2 = {1, 10, 4, 7 , 9 , 3 , 5, 9};
+        int c2 = 10; // specifies the container size for weight 2
+        int n2 = weight2.length;
+        System.out.println("Number of bins required in Best Fit: " + bestFit(weight2, n2, c2));
     }
 }
-
 // This code is contributed by 29AjayKumar
