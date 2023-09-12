@@ -23,4 +23,5 @@ public class Cut {
     public double getArea() {
         return area;
     }
+    private String notes;
 }

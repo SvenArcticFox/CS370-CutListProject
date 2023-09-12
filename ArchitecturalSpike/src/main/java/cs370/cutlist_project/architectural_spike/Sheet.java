@@ -45,5 +45,4 @@ public class Sheet {
         return leftOverArea;
     }
 
-
 }
