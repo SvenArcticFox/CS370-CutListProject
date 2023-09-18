@@ -4,6 +4,5 @@ public class Cut {
     private double length;
     private double width;
     private Grain grain;
-
-
+    private double area;
 }
