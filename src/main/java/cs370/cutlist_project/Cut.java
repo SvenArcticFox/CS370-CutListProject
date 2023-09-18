@@ -5,4 +5,6 @@ public class Cut {
     private double width;
     private Grain grain;
     private double area;
+    private String cutPartCode;
+    private String notes;
 }
