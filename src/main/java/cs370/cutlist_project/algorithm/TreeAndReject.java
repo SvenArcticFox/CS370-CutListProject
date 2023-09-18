@@ -7,10 +7,10 @@ import cs370.cutlist_project.Cut;
 import java.util.ArrayList;
 
 @NoArgsConstructor
-public class TreeAndRejectTracker {
+public class TreeAndReject {
     @Setter
     @Getter
-    private CutTree tree;
+    private BinaryTree tree = new BinaryTree();
 
     @Getter
     private final ArrayList<Cut> rejectList = new ArrayList<>();
