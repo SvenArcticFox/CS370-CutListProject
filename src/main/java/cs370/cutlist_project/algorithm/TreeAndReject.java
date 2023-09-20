@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class TreeAndReject {
     @Setter
     @Getter
-    private BinaryTree tree = new BinaryTree();
+    private CutTree tree = new CutTree();
 
     @Getter
     private final ArrayList<Cut> rejectList = new ArrayList<>();

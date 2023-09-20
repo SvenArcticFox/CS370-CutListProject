@@ -11,7 +11,7 @@ public class Algorithm {
     }
 
     private static TreeAndReject algorithm(double maxLength, double maxWidth, Cut[] sortedCuts ,
-                                           BinaryTree tree, int index) {
+                                           CutTree tree, int index) {
 
 
     }
