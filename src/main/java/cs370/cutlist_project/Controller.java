@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Controller {
-
+    Sheet s = new Sheet();
     @FXML
     public VBox rectBox;
     Rectangle rec = new Rectangle();
@@ -70,25 +70,22 @@ public class Controller {
 */
     @FXML
     void handleOptimize(MouseEvent event) {
-        Sheet s = new Sheet(Double.parseDouble(stockSheetLengthField.getText()), Double.parseDouble(stockSheetWidthField.getText()));
+        s.setLength(Double.parseDouble(stockSheetLengthField.getText()));
+        s.setWidth(Double.parseDouble(stockSheetWidthField.getText()));
         System.out.println("The length is: " + s.getLength() + ". The width is: " + s.getWidth() + "\n" + "The area is: " + s.getTotalArea());
         createRect(rec, s);
     }
 
     private void createRect(Rectangle rec, Sheet s)
     {
+        if(rectBox.getChildren().contains(rectBox)) {
+            rectBox.getChildren().removeAll();
+        }
         rec.setWidth(s.getWidth());
         rec.setHeight(s.getLength());
         rec.setFill(Color.RED);
         rec.setStroke(Color.BLACK);
-        if(rectBox.getChildren().contains(rectBox)) {
-            rectBox.getChildren().removeAll();
-            rectBox.getChildren().add(rec);
-        }
-        else
-        {
-          rectBox.getChildren().add(rec);
-        }
+        rectBox.getChildren().add(rec);
     }
 
 }
