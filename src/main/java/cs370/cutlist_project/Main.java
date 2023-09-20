@@ -20,13 +20,6 @@ public class Main extends Application {
 
 
 
-        EventHandler<ActionEvent> eve = new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
-                String num;
-            }
-        };
-
-
 
     }
     public static void main(String[] args) {
