@@ -21,12 +21,15 @@
         <TextField fx:id="numberOfCutSheetsField" layoutX="500.0" layoutY="140.0" prefWidth="100.0" />
       <!--  <Button layoutX="270.0" layoutY="300.0" text="Add Part" /> -->
         <Button fx:id="optimizeButton" layoutX="645.0" layoutY="140.0" onMouseClicked="#handleOptimize" text="Optimize" />
-        <TableView fx:id="cuttingPatternsTable" layoutX="14.0" layoutY="182.0" prefHeight="153.0" prefWidth="772.0">
+        <TableView fx:id="cuttingPatternsTable" editable="true" layoutX="14.0" layoutY="182.0" prefHeight="153.0" prefWidth="772.0">
             <columns>
-                <TableColumn text="Stock Sheet" />
-                <TableColumn text="Parts" />
+                <TableColumn prefWidth="103.0" text="Stock Sheet" />
+                <TableColumn prefWidth="60.0" text="Parts" />
+            <TableColumn fx:id="lengthColumn" prefWidth="118.0" text="Length" />
+            <TableColumn fx:id="widthColumn" prefWidth="153.0" text="Width" />
             </columns>
         </TableView>
       <VBox fx:id="rectBox" layoutX="16.0" layoutY="345.0" prefHeight="241.0" prefWidth="772.0" />
+      <Pane fx:id="rectPane" layoutX="15.0" layoutY="352.0" prefHeight="241.0" prefWidth="772.0" />
     </children>
 </AnchorPane>
