@@ -1,31 +1,63 @@
 package cs370.cutlist_project;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import java.awt.event.ActionEvent;
-
-
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 public class Controller {
+
     @FXML
-    public TextField lengthInput;
+    private TextField stockSheetLengthField;
+
     @FXML
-    public TextField widthInput;
+    private TextField stockSheetWidthField;
+
+   /*
     @FXML
-    public Button sheetButton;
+    private TextField numberOfStockSheetsField;
+
+    */
+
+    @FXML
+    private TextField cutLengthField;
+
+    @FXML
+    private TextField cutWidthField;
+
+    @FXML
+    private TextField numberOfCutSheetsField;
 
 
     @FXML
-    void sheetMaker(ActionEvent event)
-    {
-        String len = lengthInput.getText();
-        String wid = widthInput.getText();
-        double leng = Double.parseDouble(len);
-        double width = Double.parseDouble(wid);
-        Sheet s = new Sheet(leng, width);
+    private TableView<?> cuttingPatternsTable;
+
+    @FXML
+    private TableColumn<?, ?> stockSheetColumn;
+
+    @FXML
+    private TableColumn<?, ?> partsColumn;
+
+    @FXML
+    private Button addStockSheetButton;
+
+    @FXML
+    private Button addPartButton;
+
+    @FXML
+    private Button optimizeButton;
+
+    @FXML
+    void handleAddStockSheet(MouseEvent event) {
+        // Implement logic to add stock sheet to the table
     }
 
+    @FXML
+    void handleAddPart(MouseEvent event) {
+        // Implement logic to add part to the table
+    }
 
+    @FXML
+    void handleOptimize(MouseEvent event) {
+        // Implement logic to optimize cutting patterns
+    }
 }
