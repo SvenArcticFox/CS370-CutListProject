@@ -55,9 +55,13 @@ public class Controller {
     void handleAddPart(MouseEvent event) {
         // Implement logic to add part to the table
     }
-
+/*
+    As of right now, the idea here to have the button be pressed, and the sheet is displayed at the bottom of the screen
+    Right now, they show that the sheet is being made, and in the console telling the length, width and area.S
+*/
     @FXML
     void handleOptimize(MouseEvent event) {
-        // Implement logic to optimize cutting patterns
+        Sheet s = new Sheet(Double.parseDouble(stockSheetLengthField.getText()), Double.parseDouble(stockSheetWidthField.getText()));
+        System.out.println("The length is: " + s.getLength() + ". The width is: " + s.getWidth()+"\n" + "The area is: "+ s.getTotalArea());
     }
 }
