@@ -6,18 +6,26 @@ import lombok.*;
 
 @NoArgsConstructor
 public class BinaryTree {
+    class Node {
+
+        Node left;
+
+        Node right;
+        Cut cut;
+
+        void recursiveAdd(Node currentNode, Cut cut) {
+
+        }
+
+    }
     @Getter
     @Setter
     private Node root;
 
-}
-
-class Node {
-
-    Node left;
-
-    Node right;
-    Cut cut;
-
+    public void add(Cut cut) {
+        root.recursiveAdd(root, cut);
+    }
 
 }
+
+
