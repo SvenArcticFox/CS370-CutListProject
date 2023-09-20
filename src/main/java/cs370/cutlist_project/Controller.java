@@ -61,4 +61,3 @@ public class Controller {
         // Implement logic to optimize cutting patterns
     }
 }
-
