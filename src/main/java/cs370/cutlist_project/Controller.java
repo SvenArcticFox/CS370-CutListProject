@@ -1,6 +1,9 @@
 package cs370.cutlist_project;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -9,13 +12,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Controller {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class Controller implements Initializable {
     public Pane rectPane;
     Sheet s = new Sheet();
-    Cut c = new Cut();
+
     @FXML
-    public VBox rectBox;
-    Rectangle rec = new Rectangle();
+    public Rectangle rec;
+
     @FXML
     private TextField stockSheetLengthField;
 
@@ -38,18 +44,14 @@ public class Controller {
     private TextField numberOfCutSheetsField;
 
 
+    ObservableList<Cut> cutList = FXCollections.observableArrayList();
     @FXML
-    TableView<Sheet> cuttingPatternsTable = new TableView<Sheet>();
+    public TableView<Cut> cuttingPatternsTable;
 
     @FXML
-    private TableColumn<?, ?> stockSheetColumn;
-
+    public TableColumn<Cut, Double> lengthColumn;
     @FXML
-    private TableColumn<?, ?> partsColumn;
-    @FXML
-    public TableColumn<Sheet, Double> lengthColumn;
-    @FXML
-    public TableColumn<Sheet, Double> widthColumn;
+    public TableColumn<Cut, Double> widthColumn;
     //@FXML
     //private Button addStockSheetButton;
 
@@ -81,29 +83,26 @@ public class Controller {
         s.setLength(Double.parseDouble(stockSheetLengthField.getText()));
         s.setWidth(Double.parseDouble(stockSheetWidthField.getText()));
         System.out.println("The length is: " + s.getLength() + ". The width is: " + s.getWidth() + "\n" + "The area is: " + s.getTotalArea());
-        createRect(rec, s);
+        createRect(s);
 
         if(!cutLengthField.getText().isEmpty() || !cutWidthField.getText().isEmpty())
         {
+            Cut c = new Cut();
             c.setLength(Double.parseDouble(cutLengthField.getText()));
             c.setWidth(Double.parseDouble(cutWidthField.getText()));
             Rectangle rec2 = new Rectangle();
+            cutList.add(c);
             makeCut(rec2,s,c);
         }
     }
 
-    private void createRect(Rectangle rec, Sheet s)
+    private void createRect(Sheet s)
     {
-        if(rectBox.getChildren().contains(rectBox)) {
-            rectBox.getChildren().removeAll();
-        }
         rec.setWidth(s.getWidth());
         rec.setHeight(s.getLength());
         rec.setFill(Color.RED);
         rec.setStroke(Color.BLACK);
-        rectPane.getChildren().add(rec);
     }
-
     private void makeCut(Rectangle rec2, Sheet s, Cut c)
     {
         if(s.getLength() < c.getLength() || s.getWidth() < c.getWidth())
@@ -120,4 +119,10 @@ public class Controller {
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        lengthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("length"));
+        widthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("width"));
+        cuttingPatternsTable.setItems(cutList);
+    }
 }
