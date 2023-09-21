@@ -23,8 +23,6 @@ public class CutTree {
     }
     private Sheet sheet;
     private Node root;
-    private double sheetLength;
-    private double sheetWidth;
 
     CutTree() {
         this.root = null;
@@ -34,8 +32,6 @@ public class CutTree {
     CutTree(Sheet sheet) {
         this.root = null;
         this.sheet = sheet;
-        this.sheetLength = this.sheet.getLength();
-        this.sheetWidth = this.sheet.getWidth();
     }
 
     private Node recursiveAdd(Node currentNode, Cut cut, double length, double width) {
@@ -46,10 +42,10 @@ public class CutTree {
         double leftOverLength = this.sheet.getLength() - length;
         double leftOverWidth = this.sheet.getWidth() - width;
 
-        if (cut.getWidth() <= leftOverWidth) {
+        if (cut.getWidth() <= leftOverWidth && cut.getLength() <= currentNode.cut.getLength()) {
             currentNode.left = recursiveAdd(currentNode.left, cut, length, width + cut.getWidth());
         }
-        else if (cut.getLength() <= leftOverLength) {
+        else if (cut.getLength() <= leftOverLength && cut.getWidth() <= currentNode.cut.getWidth()) {
             currentNode.right = recursiveAdd(currentNode.right, cut, length + cut.getLength(), width);
         }
         else {

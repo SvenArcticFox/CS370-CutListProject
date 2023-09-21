@@ -5,6 +5,7 @@ import cs370.cutlist_project.*;
 import java.util.Arrays;
 
 public class Algorithm {
+    /*
     public static void entrance(Sheet sheet, Cut... cuts) {
         Cut[] cutsArray = (Cut[]) Arrays.stream(cuts).toArray();
 
@@ -14,5 +15,5 @@ public class Algorithm {
                                            CutTree tree, int index) {
 
 
-    }
+    }*/
 }
