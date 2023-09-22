@@ -8,15 +8,15 @@ import cs370.cutlist_project.Sheet;
 public class CutTree {
     class Node {
 
-        Node left;
+        Node widthAxis;
 
-        Node right;
+        Node lengthAxis;
 
         Cut cut;
 
         Node(Cut cut) {
-            this.left = null;
-            this.right = null;
+            this.widthAxis = null;
+            this.lengthAxis = null;
             this.cut = cut;
         }
 
@@ -43,10 +43,10 @@ public class CutTree {
         double leftOverWidth = this.sheet.getWidth() - width;
 
         if (cut.getWidth() <= leftOverWidth && cut.getLength() <= currentNode.cut.getLength()) {
-            currentNode.left = recursiveAdd(currentNode.left, cut, length, width + cut.getWidth());
+            currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, cut, length, width + cut.getWidth());
         }
         else if (cut.getLength() <= leftOverLength && cut.getWidth() <= currentNode.cut.getWidth()) {
-            currentNode.right = recursiveAdd(currentNode.right, cut, length + cut.getLength(), width);
+            currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, cut, length + cut.getLength(), width);
         }
         else {
             return currentNode;
