@@ -48,7 +48,7 @@ public class CutTree {
         if (cut.getWidth() <= leftOverWidth && cut.getLength() <= currentNode.cut.getLength()) {
             currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, cut, length, width + cut.getWidth());
         }
-        else if (cut.getLength() <= leftOverLength && cut.getWidth() <= currentNode.cut.getWidth()) {
+        else if (cut.getLength() <= leftOverLength /*&& cut.getWidth() <= currentNode.cut.getWidth()*/) {
             currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, cut, length + cut.getLength(), width);
         }
         else {
