@@ -24,7 +24,7 @@ public class Display {
         TilePane pan = new TilePane();
 
         pan.getChildren().add(lb);
-        Scene sc = new Scene(pan, 400, 1080);
+        Scene sc = new Scene(pan, 400, 100);
         secondary.setScene(sc);
         secondary.show();
 
