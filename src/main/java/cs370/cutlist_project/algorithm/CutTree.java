@@ -4,6 +4,8 @@ import cs370.cutlist_project.Cut;
 
 import cs370.cutlist_project.Sheet;
 
+import java.util.ArrayList;
+
 
 public class CutTree {
     class Node {
@@ -23,6 +25,7 @@ public class CutTree {
     }
     private Sheet sheet;
     private Node root;
+    private final ArrayList<Cut> reject = new ArrayList<>();
 
     CutTree() {
         this.root = null;
