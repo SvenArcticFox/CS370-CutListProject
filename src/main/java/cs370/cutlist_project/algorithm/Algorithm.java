@@ -26,7 +26,7 @@ public class Algorithm {
         int i = (lowIndex-1);
 
         for (int j = lowIndex; j < highIndex; j++) {
-            if (arr[j].getArea() <= pivot.getArea()) {
+            if (arr[j].getArea() >= pivot.getArea()) {
                 i++;
 
                 Cut swapTemp = arr[i];
