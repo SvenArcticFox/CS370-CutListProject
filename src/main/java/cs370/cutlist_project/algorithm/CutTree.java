@@ -37,19 +37,19 @@ public class CutTree {
         this.sheet = sheet;
     }
 
-    private Node recursiveAdd(Node currentNode, Cut cut, double length, double width) {
+    private Node recursiveAdd(Node currentNode, Cut cut, double cutsLength, double cutsWidth) {
         if (currentNode == null) {
             return new Node(cut);
         }
 
-        double leftOverLength = this.sheet.getLength() - length;
-        double leftOverWidth = this.sheet.getWidth() - width;
+        double leftOverLength = this.sheet.getLength() - cutsLength;
+        double leftOverWidth = this.sheet.getWidth() - cutsWidth;
 
         if (cut.getWidth() <= leftOverWidth && cut.getLength() <= currentNode.cut.getLength()) {
-            currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, cut, leftOverLength, width + cut.getWidth());
+            currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, cut, currentNode.cut.getLength(), cutsWidth + cut.getWidth());
         }
         else if (cut.getLength() <= leftOverLength /*&& cut.getWidth() <= currentNode.cut.getWidth()*/) {
-            currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, cut, length + cut.getLength(), width);
+            currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, cut, cutsLength + cut.getLength(), cutsWidth);
         }
         else {
             return currentNode;
