@@ -12,7 +12,7 @@ public class Algorithm {
 
     }
 
-    public static void quickSort(Cut arr[], int lowIndex, int highIndex) {
+    private static void quickSort(Cut arr[], int lowIndex, int highIndex) {
         if (lowIndex < highIndex) {
             int partitionIndex = partition(arr, lowIndex, highIndex);
 
