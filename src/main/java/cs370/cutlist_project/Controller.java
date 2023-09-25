@@ -43,7 +43,7 @@ public class Controller implements Initializable {
     @FXML
     private TextField numberOfCutSheetsField;
 
-    Cut[] cList;
+
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     @FXML
     public TableView<Cut> cuttingPatternsTable;
@@ -82,6 +82,7 @@ public class Controller implements Initializable {
     void handleOptimize(MouseEvent event) {
             createRect(s);
             makeCut(s, cutList);
+            Cut[] cList = cutList.toArray(new Cut[0]);
     }
 
     @FXML
@@ -112,14 +113,14 @@ public class Controller implements Initializable {
     }
     private void makeCut(Sheet s1, ObservableList<Cut> cl)
     {
-        for(int i = 0; i < cl.size(); i++) {
-            if (s1.getLength() < cl.get(i).getLength() || s1.getWidth() < cl.get(i).getWidth()) {
+        for (Cut cut : cl) {
+            if (s1.getLength() < cut.getLength() || s1.getWidth() < cut.getWidth()) {
                 System.out.println("DOES NOT WORK");
 
             } else {
                 Rectangle rec2 = new Rectangle();
-                rec2.setWidth(cl.get(i).getWidth());
-                rec2.setHeight(cl.get(i).getLength());
+                rec2.setWidth(cut.getWidth());
+                rec2.setHeight(cut.getLength());
                 rec2.setFill(Color.BLUEVIOLET);
                 rec2.setStroke(Color.ORANGE);
                 rectPane.getChildren().add(rec2);
@@ -129,9 +130,9 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         lengthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("length"));
         widthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("width"));
-
         cuttingPatternsTable.setItems(cutList);
     }
 }

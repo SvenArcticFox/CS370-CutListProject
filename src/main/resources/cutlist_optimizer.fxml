@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 
-
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="727.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs370.cutlist_project.Controller">
    <children>
         <Label layoutX="14.0" layoutY="21.0" text="Stock Sheet Dimensions" />
@@ -34,9 +33,9 @@
             <TableColumn fx:id="widthColumn" prefWidth="153.0" text="Width" />
             </columns>
         </TableView>
-      <Pane fx:id="rectPane" layoutX="28.0" layoutY="355.0" prefHeight="329.0" prefWidth="875.0">
+      <Pane fx:id="rectPane" layoutX="23.0" layoutY="348.0" prefHeight="329.0" prefWidth="875.0">
          <children>
-            <Rectangle fx:id="rec" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="338.0" layoutX="-4.0" layoutY="-5.0" stroke="WHITE" strokeType="INSIDE" width="880.0" />
+            <Rectangle fx:id="rec" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="330.0" stroke="WHITE" strokeType="INSIDE" width="875.0" />
          </children>
       </Pane>
       <Button fx:id="addStockSheetButton" layoutX="232.0" layoutY="84.0" onMouseClicked="#sheetCreator" text="Create Sheet" />
