@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -17,6 +16,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     public Pane rectPane;
+    public Button cutButton;
     Sheet s = new Sheet();
 
     @FXML
@@ -43,7 +43,7 @@ public class Controller implements Initializable {
     @FXML
     private TextField numberOfCutSheetsField;
 
-
+    Cut[] cList;
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     @FXML
     public TableView<Cut> cuttingPatternsTable;
@@ -73,49 +73,57 @@ public class Controller implements Initializable {
         void handleAddPart(MouseEvent event) {
             // Implement logic to add part to the table
         }
-        */
-/*
+
+
     As of right now, the idea here to have the button be pressed, and the sheet is displayed at the bottom of the screen
     Right now, they show that the sheet is being made, and in the console telling the length, width and area.S
 */
     @FXML
     void handleOptimize(MouseEvent event) {
-        s.setLength(Double.parseDouble(stockSheetLengthField.getText()));
-        s.setWidth(Double.parseDouble(stockSheetWidthField.getText()));
-        System.out.println("The length is: " + s.getLength() + ". The width is: " + s.getWidth() + "\n" + "The area is: " + s.getTotalArea());
-        createRect(s);
+            createRect(s);
+            makeCut(s, cutList);
+    }
 
+    @FXML
+    void cutCreator(MouseEvent event)
+    {
         if(!cutLengthField.getText().isEmpty() || !cutWidthField.getText().isEmpty())
         {
             Cut c = new Cut();
             c.setLength(Double.parseDouble(cutLengthField.getText()));
             c.setWidth(Double.parseDouble(cutWidthField.getText()));
-            Rectangle rec2 = new Rectangle();
             cutList.add(c);
-            makeCut(rec2,s,c);
         }
     }
 
-    private void createRect(Sheet s)
+    @FXML
+    void sheetCreator(MouseEvent event){
+        s.setLength(Double.parseDouble(stockSheetLengthField.getText()));
+        s.setWidth(Double.parseDouble(stockSheetWidthField.getText()));
+        System.out.println("The length is: " + s.getLength() + ". The width is: " + s.getWidth() + "\n" + "The area is: " + s.getTotalArea());
+
+    }
+    private void createRect(Sheet si)
     {
-        rec.setWidth(s.getWidth());
-        rec.setHeight(s.getLength());
+        rec.setWidth(si.getWidth());
+        rec.setHeight(si.getLength());
         rec.setFill(Color.RED);
         rec.setStroke(Color.BLACK);
     }
-    private void makeCut(Rectangle rec2, Sheet s, Cut c)
+    private void makeCut(Sheet s1, ObservableList<Cut> cl)
     {
-        if(s.getLength() < c.getLength() || s.getWidth() < c.getWidth())
-        {
-            System.out.println("DOES NOT WORK");
+        for(int i = 0; i < cl.size(); i++) {
+            if (s1.getLength() < cl.get(i).getLength() || s1.getWidth() < cl.get(i).getWidth()) {
+                System.out.println("DOES NOT WORK");
 
-        }
-        else{
-            rec2.setWidth(c.getWidth());
-            rec2.setHeight(c.getLength());
-            rec2.setFill(Color.GREEN);
-            rec2.setStroke(Color.BLACK);
-            rectPane.getChildren().add(rec2);
+            } else {
+                Rectangle rec2 = new Rectangle();
+                rec2.setWidth(cl.get(i).getWidth());
+                rec2.setHeight(cl.get(i).getLength());
+                rec2.setFill(Color.BLUEVIOLET);
+                rec2.setStroke(Color.ORANGE);
+                rectPane.getChildren().add(rec2);
+            }
         }
     }
 
@@ -123,6 +131,7 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lengthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("length"));
         widthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("width"));
+
         cuttingPatternsTable.setItems(cutList);
     }
 }
