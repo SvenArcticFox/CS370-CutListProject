@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     public Pane rectPane;
+    public Button cutButton;
     Sheet s = new Sheet();
 
     @FXML
@@ -52,8 +53,8 @@ public class Controller implements Initializable {
     public TableColumn<Cut, Double> lengthColumn;
     @FXML
     public TableColumn<Cut, Double> widthColumn;
-    @FXML
-    private Button addStockSheetButton;
+    //@FXML
+    //private Button addStockSheetButton;
 
     //@FXML
     //private Button addPartButton;
@@ -80,21 +81,27 @@ public class Controller implements Initializable {
 */
     @FXML
     void handleOptimize(MouseEvent event) {
+            createRect(s);
+            makeCut(s, cutList);
+    }
+
+    @FXML
+    void cutCreator(MouseEvent event)
+    {
         if(!cutLengthField.getText().isEmpty() || !cutWidthField.getText().isEmpty())
         {
             Cut c = new Cut();
             c.setLength(Double.parseDouble(cutLengthField.getText()));
             c.setWidth(Double.parseDouble(cutWidthField.getText()));
-            Rectangle rec2 = new Rectangle();
-            makeCut(rec2,s,c);
+            cutList.add(c);
         }
     }
+
     @FXML
     void sheetCreator(MouseEvent event){
         s.setLength(Double.parseDouble(stockSheetLengthField.getText()));
         s.setWidth(Double.parseDouble(stockSheetWidthField.getText()));
         System.out.println("The length is: " + s.getLength() + ". The width is: " + s.getWidth() + "\n" + "The area is: " + s.getTotalArea());
-        createRect(s);
 
     }
     private void createRect(Sheet si)
@@ -104,20 +111,20 @@ public class Controller implements Initializable {
         rec.setFill(Color.RED);
         rec.setStroke(Color.BLACK);
     }
-    private void makeCut(Rectangle rec2, Sheet s1, Cut c1)
+    private void makeCut(Sheet s1, ObservableList<Cut> cl)
     {
-        if(s1.getLength() < c1.getLength() || s1.getWidth() < c1.getWidth())
-        {
-            System.out.println("DOES NOT WORK");
+        for(int i = 0; i < cl.size(); i++) {
+            if (s1.getLength() < cl.get(i).getLength() || s1.getWidth() < cl.get(i).getWidth()) {
+                System.out.println("DOES NOT WORK");
 
-        }
-        else{
-            rec2.setWidth(c1.getWidth());
-            rec2.setHeight(c1.getLength());
-            rec2.setFill(Color.GREEN);
-            rec2.setStroke(Color.BLACK);
-            cutList.add(c1);
-            rectPane.getChildren().add(rec2);
+            } else {
+                Rectangle rec2 = new Rectangle();
+                rec2.setWidth(cl.get(i).getWidth());
+                rec2.setHeight(cl.get(i).getLength());
+                rec2.setFill(Color.BLUEVIOLET);
+                rec2.setStroke(Color.GRAY);
+                rectPane.getChildren().add(rec2);
+            }
         }
     }
 
