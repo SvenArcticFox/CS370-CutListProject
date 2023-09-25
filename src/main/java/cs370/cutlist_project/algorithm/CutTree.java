@@ -3,6 +3,7 @@ package cs370.cutlist_project.algorithm;
 import cs370.cutlist_project.Cut;
 
 import cs370.cutlist_project.Sheet;
+import lombok.Getter;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class CutTree {
 
     }
     private Sheet sheet;
+    @Getter
     private Node root;
     private final ArrayList<Cut> reject = new ArrayList<>();
 
@@ -37,19 +39,21 @@ public class CutTree {
         this.sheet = sheet;
     }
 
-    private Node recursiveAdd(Node currentNode, Cut cut, double cutsLength, double cutsWidth) {
+    private Node recursiveAdd(Node currentNode, Cut cut, double totalCutsLength, double totalCutsWidth) {
         if (currentNode == null) {
             return new Node(cut);
         }
 
-        double leftOverLength = this.sheet.getLength() - cutsLength;
-        double leftOverWidth = this.sheet.getWidth() - cutsWidth;
+        double leftOverLength = this.sheet.getLength() - totalCutsLength;
+        double leftOverWidth = this.sheet.getWidth() - totalCutsWidth;
 
         if (cut.getWidth() <= leftOverWidth && cut.getLength() <= currentNode.cut.getLength()) {
-            currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, cut, currentNode.cut.getLength(), cutsWidth + cut.getWidth());
+            currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, cut, currentNode.cut.getLength(),
+                    totalCutsWidth + cut.getWidth());
         }
         else if (cut.getLength() <= leftOverLength /*&& cut.getWidth() <= currentNode.cut.getWidth()*/) {
-            currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, cut, cutsLength + cut.getLength(), cutsWidth);
+            currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, cut,
+                    totalCutsLength + cut.getLength(), totalCutsWidth);
         }
         else {
             return currentNode;

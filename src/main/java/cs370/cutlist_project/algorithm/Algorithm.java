@@ -6,10 +6,15 @@ import java.util.Arrays;
 
 public class Algorithm {
 
-    public static void entrance(Sheet sheet, Cut[] cuts) {
+    public static CutTree entrance(Sheet sheet, Cut[] cuts) {
         quickSort(cuts, 0, cuts.length -1);
+        CutTree cutTree = new CutTree(sheet);
 
+        for (Cut cut : cuts) {
+            cutTree.add(cut);
+        }
 
+        return cutTree;
     }
 
     private static void quickSort(Cut arr[], int lowIndex, int highIndex) {
