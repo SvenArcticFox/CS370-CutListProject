@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -44,7 +43,7 @@ public class Controller implements Initializable {
     @FXML
     private TextField numberOfCutSheetsField;
 
-
+    Cut[] cList;
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     @FXML
     public TableView<Cut> cuttingPatternsTable;
@@ -122,7 +121,7 @@ public class Controller implements Initializable {
                 rec2.setWidth(cl.get(i).getWidth());
                 rec2.setHeight(cl.get(i).getLength());
                 rec2.setFill(Color.BLUEVIOLET);
-                rec2.setStroke(Color.GRAY);
+                rec2.setStroke(Color.ORANGE);
                 rectPane.getChildren().add(rec2);
             }
         }
