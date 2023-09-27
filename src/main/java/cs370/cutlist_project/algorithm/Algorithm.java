@@ -11,6 +11,10 @@ public class Algorithm {
         CutTree cutTree = new CutTree(sheet);
 
         for (Cut cut : cuts) {
+            System.out.println(cut.getArea() + "\t" + cut.getWidth() + "\t" + cut.getLength());
+        }
+
+        for (Cut cut : cuts) {
             cutTree.add(cut);
         }
 
@@ -48,9 +52,14 @@ public class Algorithm {
     }
 
     public static void main(String[] args) {
-        Sheet sheet = new Sheet(50, 50);
-        Cut[] cuts = new Cut[10];
+        Sheet sheet = new Sheet(1000, 1000);
+        Cut[] cuts = new Cut[3];
 
+        cuts[0] = new Cut(500, 500);
+        cuts[1] = new Cut(250, 250 );
+        cuts[2] = new Cut(350, 350);
+
+        /*
         cuts[0] = new Cut(10, 20);
         cuts[1] = new Cut(20, 15);
         cuts[2] = new Cut(18, 12);
@@ -61,6 +70,8 @@ public class Algorithm {
         cuts[7] = new Cut(12, 3);
         cuts[8] = new Cut(18, 9);
         cuts[9] = new Cut(5, 6);
+
+         */
 
         CutTree cutTree = entrance(sheet, cuts);
         cutTree.printTree();
