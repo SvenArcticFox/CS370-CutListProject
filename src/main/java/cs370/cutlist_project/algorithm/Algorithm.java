@@ -47,9 +47,22 @@ public class Algorithm {
         return i+1;
     }
 
-    /*private static TreeAndReject algorithm(double maxLength, double maxWidth, Cut[] sortedCuts ,
-                                           CutTree tree, int index) {
+    public static void main(String[] args) {
+        Sheet sheet = new Sheet(50, 50);
+        Cut[] cuts = new Cut[10];
 
+        cuts[0] = new Cut(10, 20);
+        cuts[1] = new Cut(20, 15);
+        cuts[2] = new Cut(18, 12);
+        cuts[3] = new Cut(14, 8);
+        cuts[4] = new Cut(9, 4);
+        cuts[5] = new Cut(30, 15);
+        cuts[6] = new Cut(5, 9);
+        cuts[7] = new Cut(12, 3);
+        cuts[8] = new Cut(18, 9);
+        cuts[9] = new Cut(5, 6);
 
-    }*/
+        CutTree cutTree = entrance(sheet, cuts);
+        cutTree.printTree();
+    }
 }

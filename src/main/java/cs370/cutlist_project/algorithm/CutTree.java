@@ -39,21 +39,32 @@ public class CutTree {
         this.sheet = sheet;
     }
 
-    private Node recursiveAdd(Node currentNode, Cut cut, double totalCutsLength, double totalCutsWidth) {
+    /**
+     *
+     * @param currentNode The current node that is being worked with in the tree
+     * @param cut The cut object to be placed in the tree
+     * @param totalCutsLength The total length of all the cuts
+     * @param totalCutsWidth The total width of all the cuts
+     * @param sheetLength The length of the sheet or the length of the cut if placing the cut on the width axis
+     * @return The new node that contains the cut object
+     */
+    private Node recursiveAdd(Node currentNode, Cut cut, double totalCutsLength, double totalCutsWidth,
+                              double sheetLength) {
         if (currentNode == null) {
             return new Node(cut);
         }
 
-        double leftOverLength = this.sheet.getLength() - totalCutsLength;
+        double leftOverLength = sheetLength - totalCutsLength;
         double leftOverWidth = this.sheet.getWidth() - totalCutsWidth;
 
         if (cut.getWidth() <= leftOverWidth && cut.getLength() <= currentNode.cut.getLength()) {
+            //Cut sheet off by the length of the last cut
             currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, cut, currentNode.cut.getLength(),
-                    totalCutsWidth + cut.getWidth());
+                    totalCutsWidth + cut.getWidth(), /*sheetLength*/ currentNode.cut.getLength());
         }
         else if (cut.getLength() <= leftOverLength /*&& cut.getWidth() <= currentNode.cut.getWidth()*/) {
             currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, cut,
-                    totalCutsLength + cut.getLength(), totalCutsWidth);
+                    totalCutsLength + cut.getLength(), totalCutsWidth, sheetLength);
         }
         else {
             return currentNode;
@@ -63,8 +74,31 @@ public class CutTree {
     }
 
     public void add(Cut cut) {
-        this.root = recursiveAdd(root, cut, cut.getLength(), cut.getWidth());
+        this.root = recursiveAdd(root, cut, cut.getLength(), cut.getWidth(), sheet.getLength());
 
+    }
+
+    public void printTree() {
+        printTreeUtil(this.root, 0, 10);
+    }
+
+    private void printTreeUtil(Node currentNode, int space, int spaceCount) {
+        if (currentNode == null)
+            return;
+
+        space += spaceCount;
+
+        printTreeUtil(currentNode.lengthAxis, space, spaceCount);
+
+        System.out.println("\n");
+
+        for (int i = spaceCount; i < space; i++) {
+            System.out.print(" ");
+        }
+        System.out.print(currentNode.cut.getArea() + "\t" + currentNode.cut.getLength() + "\t"
+                + currentNode.cut.getWidth()+ "\n");
+
+        printTreeUtil(currentNode.widthAxis, space, spaceCount);
     }
 
 }
