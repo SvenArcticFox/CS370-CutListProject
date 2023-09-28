@@ -5,14 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.StringConverter;
@@ -22,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     public Button cutButton;
-    public GridPane gridP;
+    public Pane rPane;
     Sheet s = new Sheet();
 
     @FXML
@@ -50,6 +48,7 @@ public class Controller implements Initializable {
     private TextField numberOfCutSheetsField;
 
 
+    ObservableList<Rectangle> rectangles = FXCollections.observableArrayList();
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     @FXML
     public TableView<Cut> cuttingPatternsTable;
@@ -86,15 +85,25 @@ public class Controller implements Initializable {
 */
     @FXML
     void handleOptimize(MouseEvent event) {
-            createRect(s);
-            makeCut(s, cutList);
-            Cut[] cList = cutList.toArray(new Cut[0]);
-            for(int i = 0; i < cutList.size(); i++)
+            makeCut(cutList);
+            /*for(Cut fin: cutList)
             {
-                gridP.addColumn(i+1);
-                gridP.addRow(i+1);
-            }
+                Rectangle largestRectangle = findLargestRectangle();
 
+                if(largestRectangle != null)
+                {
+                    if(fin.getWidth() == largestRectangle.getWidth() && fin.getLength() == largestRectangle.getHeight())
+                    {
+                        Cut cl = c
+                    }
+                }
+            }
+*/
+            printAllRectangles();
+
+
+
+            //Cut[] cList = cutList.toArray(new Cut[0]);
     }
 
     @FXML
@@ -102,10 +111,15 @@ public class Controller implements Initializable {
     {
         if(!cutLengthField.getText().isEmpty() || !cutWidthField.getText().isEmpty())
         {
+
             Cut c = new Cut();
             c.setLength(Double.parseDouble(cutLengthField.getText()));
             c.setWidth(Double.parseDouble(cutWidthField.getText()));
-            cutList.add(c);
+            if (s.getLength() < c.getLength() || s.getWidth() < c.getWidth()) {
+                System.out.println("DOES NOT WORK");
+
+            } else {
+            cutList.add(c);}
         }
     }
 
@@ -114,50 +128,115 @@ public class Controller implements Initializable {
         s.setLength(Double.parseDouble(stockSheetLengthField.getText()));
         s.setWidth(Double.parseDouble(stockSheetWidthField.getText()));
         System.out.println("The length is: " + s.getLength() + ". The width is: " + s.getWidth() + "\n" + "The area is: " + s.getTotalArea());
-
-    }
-    private void createRect(Sheet si)
-    {
-        rec.setWidth(si.getWidth());
-        rec.setHeight(si.getLength());
+        rec.setWidth(s.getWidth());
+        rec.setHeight(s.getLength());
         rec.setFill(Color.RED);
         rec.setStroke(Color.BLACK);
+        rPane.setPrefSize(rec.getWidth(), rec.getHeight());
+        rPane.setLayoutX(rec.getX());
+        rPane.setLayoutY(rec.getY());
     }
-    private void makeCut(Sheet s1, ObservableList<Cut> cl)
+    /*
+        In this section, it creates the rectangle that will represent the cut on the grid
+        it takes in the ObservList, creates a for loop, and if the size of the cut is larger in any way to the sheet
+        it wont make it.
+     */
+    private void makeCut(ObservableList<Cut> cl)
     {
+        if(!rectangles.isEmpty())
+        {
+            System.out.println("Removing Kids");
+            rPane.getChildren().clear();
+            rectangles.clear();
+        }
         for (Cut cut : cl) {
-            if (s1.getLength() < cut.getLength() || s1.getWidth() < cut.getWidth()) {
-                System.out.println("DOES NOT WORK");
+            Rectangle subRectangle = new Rectangle(cut.getWidth(), cut.getLength());
+            subRectangle.setFill(Color.YELLOWGREEN); // Change color as needed
+            subRectangle.setStroke(Color.YELLOW);
+            boolean isOverlap = false;
+            do {
+                double x = Math.random() * (rec.getWidth() - cut.getWidth());
+                double y = Math.random() * (rec.getHeight() - cut.getLength());
+                subRectangle.setX(x);
+                subRectangle.setY(y);
 
-            } else {
-                Rectangle rec2 = new Rectangle(cut.getWidth(), cut.getLength());
-                rec2.setFill(Color.BLUEVIOLET);
-                rec2.setStroke(Color.ORANGE);
-                rec2.setX(cut.getWidth());
-                gridP.getChildren().add(rec2);
+                isOverlap = rectangles.stream()
+                        .anyMatch(rect -> subRectangle.getBoundsInParent().intersects(rect.getBoundsInParent()));
+            } while (isOverlap);
 
-
-            }
+            rectangles.add(subRectangle);
         }
     }
+    private Rectangle findLargestRectangle() {
+        Rectangle largest = null;
+        double largestArea = 0;
+
+        for (Node node : rPane.getChildren()) {
+            if (node instanceof Rectangle) {
+                Rectangle rect = (Rectangle) node;
+                double area = rect.getWidth() * rect.getHeight();
+                if (area > largestArea) {
+                    largest = rect;
+                    largestArea = area;
+                }
+            }
+        }
+
+        return largest;
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        gridP.setPadding(new Insets(10));
-
         lengthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("length"));
         widthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("width"));
         cuttingPatternsTable.setItems(cutList);
 
     }
-    /*
-    private void editableCols(){
-        widthColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        widthColumn.setOnEditCommit(e->e.getTableView().getItems().get(e.getTablePosition().getRow()).setWidth(e.getNewValue()));
 
-        lengthColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        lengthColumn.setOnEditCommit(e->e.getTableView().getItems().get(e.getTablePosition().getRow()).setLength(e.getNewValue()));
+    private void printAllRectangles() {
+        // Add all rectangles to the root
+        rPane.getChildren().addAll(rectangles);
+        // Find the largest rectangle in the list
+        Rectangle largestRectangle = findLargestRectangle();
 
-    }*/
+        if (largestRectangle != null) {
+            // Calculate the position to move the largest rectangle to the top left of the original rectangle
+            double x = rec.getLayoutX();
+            double y = rec.getLayoutY();
+            boolean isOverlap = false;
 
+            do {
+                isOverlap = false;
+
+                // Move the largest rectangle
+                largestRectangle.setX(x);
+                largestRectangle.setY(y);
+
+                // Check for collisions with other rectangles
+                for (Rectangle rect : rectangles) {
+                    if (rect != largestRectangle && largestRectangle.getBoundsInParent().intersects(rect.getBoundsInParent())) {
+                        isOverlap = true;
+                        x += 1; // Adjust the x position (you can change this step size as needed)
+                        if (x + largestRectangle.getWidth() > rec.getX() + rec.getWidth()) {
+                            x = rec.getX(); // Reset x position if it goes beyond the original rectangle's boundary
+                            y += 1; // Move down if x is reset
+                        }
+                        break;
+                    }
+                }
+            } while (isOverlap);
+
+        }
+    }
+    //End of Controller
+    // /*
+    //    private void editableCols(){
+    //        widthColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+    //        widthColumn.setOnEditCommit(e->e.getTableView().getItems().get(e.getTablePosition().getRow()).setWidth(e.getNewValue()));
+    //
+    //        lengthColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+    //        lengthColumn.setOnEditCommit(e->e.getTableView().getItems().get(e.getTablePosition().getRow()).setLength(e.getNewValue()));
+    //
+    //    }*/
 }
