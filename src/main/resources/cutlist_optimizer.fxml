@@ -6,11 +6,14 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="727.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs370.cutlist_project.Controller">
    <children>
+      <Rectangle fx:id="rec" arcHeight="5.0" arcWidth="5.0" fill="RED" height="330.0" stroke="WHITE" strokeType="INSIDE" width="875.0" x="33.0" y="364.0" />
         <Label layoutX="14.0" layoutY="21.0" text="Stock Sheet Dimensions" />
         <Label layoutX="34.0" layoutY="63.0" text="Length (mm)" />
         <TextField fx:id="stockSheetLengthField" layoutX="123.0" layoutY="58.0" prefWidth="100.0" />
@@ -33,11 +36,14 @@
             <TableColumn fx:id="widthColumn" prefWidth="153.0" text="Width" />
             </columns>
         </TableView>
-      <Pane fx:id="rectPane" layoutX="23.0" layoutY="348.0" prefHeight="329.0" prefWidth="875.0">
-         <children>
-            <Rectangle fx:id="rec" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="330.0" stroke="WHITE" strokeType="INSIDE" width="875.0" />
-         </children>
-      </Pane>
+      <GridPane fx:id="gridP" gridLinesVisible="true" layoutX="35.0" layoutY="367.0" prefHeight="330.0" prefWidth="866.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="867.0" minWidth="10.0" prefWidth="528.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
       <Button fx:id="addStockSheetButton" layoutX="232.0" layoutY="84.0" onMouseClicked="#sheetCreator" text="Create Sheet" />
       <Button fx:id="cutButton" layoutX="691.0" layoutY="83.0" onMouseClicked="#cutCreator" text="Create Cut" />
    </children>

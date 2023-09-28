@@ -4,19 +4,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    public Pane rectPane;
     public Button cutButton;
+    public GridPane gridP;
     Sheet s = new Sheet();
 
     @FXML
@@ -83,6 +89,12 @@ public class Controller implements Initializable {
             createRect(s);
             makeCut(s, cutList);
             Cut[] cList = cutList.toArray(new Cut[0]);
+            for(int i = 0; i < cutList.size(); i++)
+            {
+                gridP.addColumn(i+1);
+                gridP.addRow(i+1);
+            }
+
     }
 
     @FXML
@@ -118,21 +130,34 @@ public class Controller implements Initializable {
                 System.out.println("DOES NOT WORK");
 
             } else {
-                Rectangle rec2 = new Rectangle();
-                rec2.setWidth(cut.getWidth());
-                rec2.setHeight(cut.getLength());
+                Rectangle rec2 = new Rectangle(cut.getWidth(), cut.getLength());
                 rec2.setFill(Color.BLUEVIOLET);
                 rec2.setStroke(Color.ORANGE);
-                rectPane.getChildren().add(rec2);
+                rec2.setX(cut.getWidth());
+                gridP.getChildren().add(rec2);
+
+
             }
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        gridP.setPadding(new Insets(10));
 
         lengthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("length"));
         widthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("width"));
         cuttingPatternsTable.setItems(cutList);
+
     }
+    /*
+    private void editableCols(){
+        widthColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        widthColumn.setOnEditCommit(e->e.getTableView().getItems().get(e.getTablePosition().getRow()).setWidth(e.getNewValue()));
+
+        lengthColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        lengthColumn.setOnEditCommit(e->e.getTableView().getItems().get(e.getTablePosition().getRow()).setLength(e.getNewValue()));
+
+    }*/
+
 }
