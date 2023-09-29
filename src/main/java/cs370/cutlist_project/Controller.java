@@ -37,7 +37,7 @@ public class Controller implements Initializable {
     private TextField numberOfStockSheetsField;
 
     */
-
+    private Button delButton;
     @FXML
     private TextField cutLengthField;
 
@@ -100,10 +100,7 @@ public class Controller implements Initializable {
             }
 */
             printAllRectangles();
-
-
-
-            //Cut[] cList = cutList.toArray(new Cut[0]);
+            Cut[] cList = cutList.toArray(new Cut[0]);
     }
 
     @FXML
@@ -159,7 +156,7 @@ public class Controller implements Initializable {
                 subRectangle.setX(x);
                 subRectangle.setY(y);
                 x += 0.1;
-                if(isOverlap && x + subRectangle.getWidth() > rec.getWidth() + rec.getX())
+                if(isOverlap && x + subRectangle.getWidth() > rec.getWidth())
                 {
                     x = 0.0;
                     y += .1;
@@ -226,13 +223,11 @@ public class Controller implements Initializable {
                             x = rec.getX(); // Reset x position if it goes beyond the original rectangle's boundary
                             rect.setY(rect.getY() + .1);
                         }
-//                        rect.setY(rect.getY() + y);
-  //                      rect.setX(rect.getX() + x);
                         break;
 
                     }
-                    System.out.println("x: " + rect.getX());
-                    System.out.println("y: " + rect.getY());
+                    //System.out.println("x: " + rect.getX());
+                    //System.out.println("y: " + rect.getY());
                 }
             } while (isOverlap);
 
