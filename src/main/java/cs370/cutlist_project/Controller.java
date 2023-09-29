@@ -159,7 +159,7 @@ public class Controller implements Initializable {
                 subRectangle.setX(x);
                 subRectangle.setY(y);
                 x += 0.1;
-                if(isOverlap && x > rec.getWidth())
+                if(isOverlap && x + subRectangle.getWidth() > rec.getWidth() + rec.getX())
                 {
                     x = 0.0;
                     y += .1;
