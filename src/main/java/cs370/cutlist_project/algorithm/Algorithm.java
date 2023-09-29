@@ -53,11 +53,10 @@ public class Algorithm {
 
     public static void main(String[] args) {
         Sheet sheet = new Sheet(1000, 1000);
-        Cut[] cuts = new Cut[3];
+        Cut[] cuts = new Cut[2];
 
         cuts[0] = new Cut(500, 500);
-        cuts[1] = new Cut(250, 250 );
-        cuts[2] = new Cut(350, 350);
+        cuts[1] = new Cut(200, 200);
 
         /*
         cuts[0] = new Cut(10, 20);

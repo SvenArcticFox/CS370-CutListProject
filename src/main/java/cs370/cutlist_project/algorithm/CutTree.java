@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class CutTree {
     class Node {
+        Sheet sheet;
 
         Node widthAxis;
 
@@ -17,10 +18,11 @@ public class CutTree {
 
         Cut cut;
 
-        Node(Cut cut) {
+        Node(Cut cut, Sheet sheet) {
             this.widthAxis = null;
             this.lengthAxis = null;
             this.cut = cut;
+            this.sheet = sheet;
         }
 
     }
@@ -28,6 +30,8 @@ public class CutTree {
     @Getter
     private Node root;
     private final ArrayList<Cut> reject = new ArrayList<>();
+    //private double totalCutsWidth;
+    //private double totalCutsLength;
 
     CutTree() {
         this.root = null;
@@ -49,15 +53,17 @@ public class CutTree {
      * @return The new node that contains the cut object
      */
     private Node recursiveAdd(Node currentNode, Cut addedCut, double totalCutsLength, double totalCutsWidth,
-                              double sheetLength) {
+                              Sheet addedSheet) {
         if (currentNode == null) {
-            return new Node(addedCut);
+            //totalCutsLength += addedCut.getLength();
+            //totalCutsWidth += addedCut.getWidth();
+            return new Node(addedCut, addedSheet);
         }
 
         System.out.println(totalCutsWidth + "\t" + totalCutsLength);
 
-        double leftOverLength = sheetLength - totalCutsLength;
-        double leftOverWidth = this.sheet.getWidth() - totalCutsWidth;
+        //double leftOverLength = sheetLength - totalCutsLength;
+        //double leftOverWidth = sheet.getWidth() - totalCutsWidth;
 
         if (addedCut.getWidth() <= leftOverWidth && addedCut.getLength() <= currentNode.cut.getLength()) {
             //Cut sheet off by the length of the last cut
