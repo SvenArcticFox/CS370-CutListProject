@@ -145,23 +145,28 @@ public class Controller implements Initializable {
     {
         if(!rectangles.isEmpty())
         {
-            System.out.println("Removing Kids");
             rPane.getChildren().clear();
             rectangles.clear();
         }
         for (Cut cut : cl) {
             Rectangle subRectangle = new Rectangle(cut.getWidth(), cut.getLength());
-            subRectangle.setFill(Color.YELLOWGREEN); // Change color as needed
+            subRectangle.setFill(Color.YELLOWGREEN);
             subRectangle.setStroke(Color.YELLOW);
             boolean isOverlap = false;
+            double x =0.0;// Math.random() * (rec.getWidth() - cut.getWidth());
+            double y =0.0;// Math.random() * (rec.getHeight() - cut.getLength());
             do {
-                double x = Math.random() * (rec.getWidth() - cut.getWidth());
-                double y = Math.random() * (rec.getHeight() - cut.getLength());
                 subRectangle.setX(x);
                 subRectangle.setY(y);
-
+                x += 0.1;
+                if(isOverlap && x > rec.getWidth())
+                {
+                    x = 0.0;
+                    y += .1;
+                }
                 isOverlap = rectangles.stream()
                         .anyMatch(rect -> subRectangle.getBoundsInParent().intersects(rect.getBoundsInParent()));
+
             } while (isOverlap);
 
             rectangles.add(subRectangle);
@@ -205,25 +210,29 @@ public class Controller implements Initializable {
             double x = rec.getLayoutX();
             double y = rec.getLayoutY();
             boolean isOverlap = false;
-
+            // Move the largest rectangle
+            largestRectangle.setX(x);
+            largestRectangle.setY(y);
             do {
                 isOverlap = false;
-
-                // Move the largest rectangle
-                largestRectangle.setX(x);
-                largestRectangle.setY(y);
-
+                //largestRectangle.setX(x);
+                //largestRectangle.setY(y);
                 // Check for collisions with other rectangles
                 for (Rectangle rect : rectangles) {
                     if (rect != largestRectangle && largestRectangle.getBoundsInParent().intersects(rect.getBoundsInParent())) {
                         isOverlap = true;
-                        x += 1; // Adjust the x position (you can change this step size as needed)
+                        rect.setX(rect.getX() + .1); // Adjust the x position (you can change this step size as needed)
                         if (x + largestRectangle.getWidth() > rec.getX() + rec.getWidth()) {
                             x = rec.getX(); // Reset x position if it goes beyond the original rectangle's boundary
-                            y += 1; // Move down if x is reset
+                            rect.setY(rect.getY() + .1);
                         }
+//                        rect.setY(rect.getY() + y);
+  //                      rect.setX(rect.getX() + x);
                         break;
+
                     }
+                    System.out.println("x: " + rect.getX());
+                    System.out.println("y: " + rect.getY());
                 }
             } while (isOverlap);
 
