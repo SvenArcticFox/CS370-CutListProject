@@ -18,11 +18,11 @@ public class CutTree {
 
         Cut cut;
 
-        Node(Cut cut, Sheet sheet) {
+        Node(Cut cut/*, Sheet sheet*/) {
             this.widthAxis = null;
             this.lengthAxis = null;
             this.cut = cut;
-            this.sheet = sheet;
+            //this.sheet = sheet;
         }
 
     }
@@ -53,17 +53,17 @@ public class CutTree {
      * @return The new node that contains the cut object
      */
     private Node recursiveAdd(Node currentNode, Cut addedCut, double totalCutsLength, double totalCutsWidth,
-                              Sheet addedSheet) {
+                              double sheetLength) {
         if (currentNode == null) {
             //totalCutsLength += addedCut.getLength();
             //totalCutsWidth += addedCut.getWidth();
-            return new Node(addedCut, addedSheet);
+            return new Node(addedCut/*, addedSheet*/);
         }
 
         System.out.println(totalCutsWidth + "\t" + totalCutsLength);
 
-        //double leftOverLength = sheetLength - totalCutsLength;
-        //double leftOverWidth = sheet.getWidth() - totalCutsWidth;
+        double leftOverLength = sheetLength - totalCutsLength;
+        double leftOverWidth = sheet.getWidth() - totalCutsWidth;
 
         if (addedCut.getWidth() <= leftOverWidth && addedCut.getLength() <= currentNode.cut.getLength()) {
             //Cut sheet off by the length of the last cut
