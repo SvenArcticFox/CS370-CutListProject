@@ -57,6 +57,8 @@ public class Controller implements Initializable {
     public TableColumn<Cut, Double> lengthColumn;
     @FXML
     public TableColumn<Cut, Double> widthColumn;
+
+    public TableColumn<Cut, String> labelColumn;
     //@FXML
     //private Button addStockSheetButton;
 
@@ -112,11 +114,14 @@ public class Controller implements Initializable {
             Cut c = new Cut();
             c.setLength(Double.parseDouble(cutLengthField.getText()));
             c.setWidth(Double.parseDouble(cutWidthField.getText()));
+
             if (s.getLength() < c.getLength() || s.getWidth() < c.getWidth()) {
                 System.out.println("DOES NOT WORK");
 
             } else {
-            cutList.add(c);}
+                c.setNotes(cutList.size()+ "");
+                cutList.add(c);
+            }
         }
     }
 
@@ -192,6 +197,8 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lengthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("length"));
         widthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("width"));
+
+        labelColumn.setCellValueFactory(new PropertyValueFactory<Cut, String>("notes"));
         cuttingPatternsTable.setItems(cutList);
 
     }

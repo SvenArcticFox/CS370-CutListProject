@@ -26,6 +26,7 @@
             <columns>
             <TableColumn fx:id="lengthColumn" prefWidth="118.0" text="Length" />
             <TableColumn fx:id="widthColumn" prefWidth="153.0" text="Width" />
+            <TableColumn fx:id="labelColumn" prefWidth="153.0" text="Label" />
             </columns>
         </TableView>
       <Rectangle fx:id="rec" arcHeight="5.0" arcWidth="5.0" fill="RED" height="316.0" stroke="WHITE" strokeType="INSIDE" width="746.0" x="33.0" y="364.0" />
