@@ -48,7 +48,7 @@ public class RectangleApp extends Application {
             // Create a rectangle with the specified width and length
             rectangle.setWidth(width);
             rectangle.setHeight(length);
-            rectangle.setFill(Color.TRANSPARENT);
+            rectangle.setFill(Color.RED);
             rectangle.setStroke(Color.BLACK);
         } catch (NumberFormatException e) {
             // Handle invalid input (non-numeric values)
