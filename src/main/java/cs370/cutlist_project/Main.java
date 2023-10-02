@@ -15,6 +15,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        primaryStage.setTitle("Cut List Optimizer");
         Parent root = FXMLLoader.load(getClass().getResource("/cutlist_optimizer.fxml"));
         Scene scene = new Scene(root);
 
