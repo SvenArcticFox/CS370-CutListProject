@@ -1,8 +1,8 @@
 package cs370.cutlist_project.algorithm;
 
+import cs370.cutlist_project.Sheet;
 import cs370.cutlist_project.Cut;
 
-import cs370.cutlist_project.Sheet;
 import lombok.Getter;
 
 import java.util.ArrayList;

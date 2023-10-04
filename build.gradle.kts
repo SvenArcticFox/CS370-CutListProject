@@ -27,7 +27,7 @@ tasks.test {
 tasks.jar {
     manifest {
         attributes(
-                mapOf("Class-Name" to "cs370.cutlist_project.Main")
+                "Main-Class" to "cs370.cutlist_project.Main"
         )
     }
 }
