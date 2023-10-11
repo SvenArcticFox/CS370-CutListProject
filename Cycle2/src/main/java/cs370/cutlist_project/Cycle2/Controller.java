@@ -1,4 +1,4 @@
-package cs370.cutlistproject.Cycle2;
+package cs370.cutlist_project.Cycle2;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
