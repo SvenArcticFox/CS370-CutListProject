@@ -2,7 +2,8 @@ plugins {
     id("java")
 }
 
-group = "cs370.cutlist_projec"
+
+group = "cs370.cutlist_project"
 version = "1.0-SNAPSHOT"
 
 repositories {

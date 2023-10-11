@@ -29,11 +29,6 @@ public class Controller implements Initializable {
     @FXML
     private TextField stockSheetWidthField;
 
-   /*
-    @FXML
-    private TextField numberOfStockSheetsField;
-
-    */
     private Button delButton;
     @FXML
     private TextField cutLengthField;
@@ -41,8 +36,6 @@ public class Controller implements Initializable {
     @FXML
     private TextField cutWidthField;
 
-    @FXML
-    private TextField numberOfCutSheetsField;
 
 
     ObservableList<Rectangle> rectangles = FXCollections.observableArrayList();
@@ -56,48 +49,19 @@ public class Controller implements Initializable {
     public TableColumn<Cut, Double> widthColumn;
 
     public TableColumn<Cut, String> labelColumn;
-    //@FXML
-    //private Button addStockSheetButton;
 
-    //@FXML
-    //private Button addPartButton;
 
     @FXML
     private Button optimizeButton;
 
 
-    /*This will be added back soon
-
-        @FXML
-        void handleAddStockSheet(MouseEvent event) {
-            // Implement logic to add stock sheet to the table
-        }
-
-        @FXML
-        void handleAddPart(MouseEvent event) {
-            // Implement logic to add part to the table
-        }
-
-
+    /*
     As of right now, the idea here to have the button be pressed, and the sheet is displayed at the bottom of the screen
     Right now, they show that the sheet is being made, and in the console telling the length, width and area.S
 */
     @FXML
     void handleOptimize(MouseEvent event) {
             makeCut(cutList);
-            /*for(Cut fin: cutList)
-            {
-                Rectangle largestRectangle = findLargestRectangle();
-
-                if(largestRectangle != null)
-                {
-                    if(fin.getWidth() == largestRectangle.getWidth() && fin.getLength() == largestRectangle.getHeight())
-                    {
-                        Cut cl = c
-                    }
-                }
-            }
-*/
             printAllRectangles();
             Cut[] cList = cutList.toArray(new Cut[0]);
     }
@@ -116,7 +80,7 @@ public class Controller implements Initializable {
                 System.out.println("DOES NOT WORK");
 
             } else {
-                c.setNotes(cutList.size()+ "");
+                c.setNotes(cutList.size() + 1 +"");
                 cutList.add(c);
             }
         }
@@ -127,6 +91,7 @@ public class Controller implements Initializable {
         s.setLength(Double.parseDouble(stockSheetLengthField.getText()));
         s.setWidth(Double.parseDouble(stockSheetWidthField.getText()));
         System.out.println("The length is: " + s.getLength() + ". The width is: " + s.getWidth() + "\n" + "The area is: " + s.getTotalArea());
+        rec.setVisible(true);
         rec.setWidth(s.getWidth());
         rec.setHeight(s.getLength());
         rec.setFill(Color.RED);
@@ -149,11 +114,12 @@ public class Controller implements Initializable {
         }
         for (Cut cut : cl) {
             Rectangle subRectangle = new Rectangle(cut.getWidth(), cut.getLength());
-            subRectangle.setFill(Color.YELLOWGREEN);
-            subRectangle.setStroke(Color.YELLOW);
+            subRectangle.setFill(Color.GREEN);
+            subRectangle.setStroke(Color.DARKGRAY);
             boolean isOverlap = false;
-            double x =0.0;// Math.random() * (rec.getWidth() - cut.getWidth());
-            double y =0.0;// Math.random() * (rec.getHeight() - cut.getLength());
+            double x =0.0;// Sets Each cut as (0,0)
+            double y =0.0;
+            //When initially set up, it will find the
             do {
                 subRectangle.setX(x);
                 subRectangle.setY(y);
@@ -192,10 +158,10 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lengthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("length"));
-        widthColumn.setCellValueFactory(new PropertyValueFactory<Cut, Double>("width"));
+        lengthColumn.setCellValueFactory(new PropertyValueFactory<>("length"));
+        widthColumn.setCellValueFactory(new PropertyValueFactory<>("width"));
 
-        labelColumn.setCellValueFactory(new PropertyValueFactory<Cut, String>("notes"));
+        labelColumn.setCellValueFactory(new PropertyValueFactory<>("notes"));
         cuttingPatternsTable.setItems(cutList);
 
     }
@@ -210,7 +176,7 @@ public class Controller implements Initializable {
             // Calculate the position to move the largest rectangle to the top left of the original rectangle
             double x = rec.getLayoutX();
             double y = rec.getLayoutY();
-            boolean isOverlap = false;
+            boolean isOverlap;
             // Move the largest rectangle
             largestRectangle.setX(x);
             largestRectangle.setY(y);
@@ -222,19 +188,21 @@ public class Controller implements Initializable {
                 for (Rectangle rect : rectangles) {
                     if (rect != largestRectangle && largestRectangle.getBoundsInParent().intersects(rect.getBoundsInParent())) {
                         isOverlap = true;
-                        rect.setX(rect.getX() + .1); // Adjust the x position (you can change this step size as needed)
+                        rect.setX(rect.getX() + .01); // Adjust the x position (you can change this step size as needed)
                         if (x + largestRectangle.getWidth() > rec.getX() + rec.getWidth()) {
                             x = rec.getX(); // Reset x position if it goes beyond the original rectangle's boundary
-                            rect.setY(rect.getY() + .1);
+                            rect.setY(rect.getY() + .01);
                         }
                         break;
 
                     }
-                    //System.out.println("x: " + rect.getX());
-                    //System.out.println("y: " + rect.getY());
+
+                    System.out.println("////////");
+                    System.out.println("x: " + rect.getX());
+                    System.out.println("y: " + rect.getY());
                 }
             } while (isOverlap);
-
+            System.out.println("END");
         }
     }
     //End of Controller
