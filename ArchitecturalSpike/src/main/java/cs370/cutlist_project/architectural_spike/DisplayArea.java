@@ -1,4 +1,4 @@
-package cs370.cutlist_project.Cycle1.architectural_spike;
+package cs370.cutlist_project.architectural_spike;
 
 public class DisplayArea {
     public static void main(String[] args) {
