@@ -1,8 +1,7 @@
-package cs370.cutlist_project.algorithm;
+package cs370.cutlist_project.Cycle1.algorithm;
 
-import cs370.cutlist_project.Sheet;
-import cs370.cutlist_project.Cut;
-
+import cs370.cutlist_project.Cycle1.Cut;
+import cs370.cutlist_project.Cycle1.Sheet;
 import lombok.Getter;
 
 import java.util.ArrayList;
