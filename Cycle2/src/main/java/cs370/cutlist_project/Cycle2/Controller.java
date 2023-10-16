@@ -35,16 +35,16 @@ public class Controller implements Initializable  {
     private Pane recPane;
 
     @FXML
-    private TableView<?> cutTable;
+    private TableView<Cut> cutTable;
 
     @FXML
-    private TableColumn<?, ?> lengthCol;
+    private TableColumn<Cut, Double> lengthCol;
 
     @FXML
-    private TableColumn<?, ?> widthCol;
+    private TableColumn<Cut, Double> widthCol;
 
     @FXML
-    private TableColumn<?, ?> labelCol;
+    private TableColumn<Cut, String> labelCol;
 
 
     @Override
