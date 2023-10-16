@@ -1,4 +1,4 @@
-package cs370.cutlist_project.architectural_spike;
+package cs370.cutlist_project.Cycle1.architectural_spike;
 
 // Java program to find number
 // of bins required using

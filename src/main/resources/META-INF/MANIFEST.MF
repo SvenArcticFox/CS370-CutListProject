@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: cs370.cutlist_project.Main
+Main-Class: cs370.cutlist_project.Cycle1.Main
 
