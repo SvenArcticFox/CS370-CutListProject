@@ -1,7 +1,10 @@
 package cs370.cutlist_project.Cycle2;
 
 
-import lombok.*;
+import javafx.scene.shape.Rectangle;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 public class Cut {
@@ -20,6 +23,9 @@ public class Cut {
     @Setter
     @Getter
     private String notes;
+    @Getter
+    @Setter
+    public Rectangle rec = new Rectangle(0,0);
 
     public Cut(double length, double width) {
         this.length = length;
@@ -30,6 +36,8 @@ public class Cut {
     public Cut(double length, double width, String cutPartCode) {
         this.length = length;
         this.width = width;
+        rec.setHeight(length);
+        rec.setWidth(width);
         this.cutPartCode = cutPartCode;
         this.area = this.length * this.width;
     }
