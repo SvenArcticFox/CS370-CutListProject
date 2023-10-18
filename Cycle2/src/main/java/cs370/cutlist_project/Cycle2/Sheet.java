@@ -1,4 +1,6 @@
-package cs370.cutlist_project;
+package cs370.cutlist_project.Cycle2;
+
+
 import lombok.*;
 
 @NoArgsConstructor
@@ -44,3 +46,4 @@ public class Sheet {
         this.totalArea = this.length * this.width;
     }
 }
+

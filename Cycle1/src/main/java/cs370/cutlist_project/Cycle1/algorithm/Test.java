@@ -1,4 +1,4 @@
-package cs370.cutlist_project.algorithm;
+package cs370.cutlist_project.Cycle1.algorithm;
 
 public class Test {
     private static class Node {

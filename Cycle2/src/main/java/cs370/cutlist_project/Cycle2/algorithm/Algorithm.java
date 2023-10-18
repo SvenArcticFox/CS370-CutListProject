@@ -1,8 +1,7 @@
-package cs370.cutlist_project.algorithm;
+package cs370.cutlist_project.Cycle2.algorithm;
 
-import cs370.cutlist_project.Cut;
-import cs370.cutlist_project.Sheet;
-import cs370.cutlist_project.*;
+import cs370.cutlist_project.Cycle2.Cut;
+import cs370.cutlist_project.Cycle2.Sheet;
 
 public class Algorithm {
 

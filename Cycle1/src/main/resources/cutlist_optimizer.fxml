@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="727.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs370.cutlist_project.Controller">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="727.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs370.cutlist_project.Cycle1.Controller">
    <children>
         <Label layoutX="14.0" layoutY="21.0" text="Stock Sheet Dimensions" />
         <Label layoutX="34.0" layoutY="63.0" text="Length (mm)" />

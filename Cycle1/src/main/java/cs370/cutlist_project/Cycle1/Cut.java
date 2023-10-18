@@ -1,6 +1,4 @@
-package cs370.cutlist_project;
-
-import lombok.*;
+package cs370.cutlist_project.Cycle1;
 
 @NoArgsConstructor
 public class Cut {
