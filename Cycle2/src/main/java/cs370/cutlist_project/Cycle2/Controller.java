@@ -6,10 +6,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -17,11 +17,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable  {
+
     //Variables
     Sheet s = new Sheet();
     @FXML
     private TextField sheetInputL;
-
+    @FXML
+    public StackPane labelPane;
     @FXML
     private TextField sheetInputW;
 
@@ -86,6 +88,7 @@ public class Controller implements Initializable  {
         {
             Cut c = new Cut(Double.parseDouble(cutInputL.getText()),Double.parseDouble(cutInputW.getText()),cutInputLabel.getText());
             c.rec.setFill(Color.CYAN);
+            c.rec.setStroke(Color.GRAY);
             cutList.add(c);
         }
         else {
@@ -94,6 +97,7 @@ public class Controller implements Initializable  {
         }
 
     }
+    /*
     private Rectangle findLargestRectangle() {
         Rectangle largest = null;
         double largestArea = 0;
@@ -110,48 +114,17 @@ public class Controller implements Initializable  {
         }
 
         return largest;
-    }
+    }*/
     public void printRec()
     {
         for (Cut cut : cutList)
         {
             recPane.getChildren().add(cut.rec);
+            Label l = new Label(cut.getCutPartCode());
+            l.relocate(cut.rec.getX() + (cut.rec.getWidth()/2), cut.rec.getY()+(cut.rec.getHeight()/2));
+            recPane.getChildren().add(l);
+
             System.out.println(recPane.getChildren());
-        }
-        Rectangle largestRectangle = findLargestRectangle();
-
-        if (largestRectangle != null)
-        {
-            double x = rect.getLayoutX();
-            double y = rect.getLayoutY();
-            boolean isOverlap;
-            // Move the largest rectangle
-            largestRectangle.setX(x);
-            largestRectangle.setY(y);
-            do {
-                isOverlap = false;
-                //largestRectangle.setX(x);
-                //largestRectangle.setY(y);
-                // Check for collisions with other rectangles
-                for (Cut cut: cutList ) {
-                    if (cut.rec != largestRectangle && largestRectangle.getBoundsInParent().intersects(cut.rec.getBoundsInParent())) {
-                        isOverlap = true;
-                        cut.rec.setX(cut.rec.getX() + .01); // Adjust the x position (you can change this step size as needed)
-                        if (x + largestRectangle.getWidth() > rect.getX() + rect.getWidth()) {
-                            x = rect.getX(); // Reset x position if it goes beyond the original rectangle's boundary
-                            cut.rec.setY(rect.getY() + .01);
-                        }
-                        break;
-
-                    }
-
-                    System.out.println("////////");
-                    System.out.println("x: " + rect.getX());
-                    System.out.println("y: " + rect.getY());
-                }
-            } while (isOverlap);
-            System.out.println("END");
-
         }
     }
 
@@ -170,21 +143,55 @@ public class Controller implements Initializable  {
             do {
                 cut.rec.setX(x);
                 cut.rec.setY(y);
-                x += 0.1;
+                x += 0.01;
                 if(isOverlap && x + cut.rec.getWidth() > rect.getWidth())
                 {
                     x = 0.0;
-                    y += .1;
+                    y += .01;
+                }
+                else if(isOverlap && x + cut.rec.getWidth() > rect.getWidth() && y +cut.rec.getHeight() > rect.getHeight())
+                {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.showAndWait();
+                    break;
                 }
                 isOverlap = recList.stream()
                         .anyMatch(rect -> cut.rec.getBoundsInParent().intersects(rect.getBoundsInParent()));
 
             } while (isOverlap);
-                recList.add(cut.rec);
+            recList.add(cut.rec);
         }
     }
+    //Making a class that will organize the cutList to have it ascending order based on
+    //Area, taking the area of each cut, putting it in its own value and adding it to its own
+    //ObservableList and then making it back.
+    public ObservableList organizeCutList(ObservableList<Cut> cl)
+    {
+        int size = cl.size();
+        int ind = 0;
+        ObservableList<Cut> finale = FXCollections.observableArrayList();
+        do {
+            double largeArea=0.0;
+
+            for(Cut cut : cl)
+            {
+                if(cut.getArea() > largeArea)
+                {
+                    ind = cl.indexOf(cut);
+                    largeArea = cut.getArea();
+                }
+            }
+            finale.add(cl.get(ind));
+            cl.remove(cl.get(ind));
+        }while(finale.size() != size);
+
+        return finale;
+    }
+
 
     public void optimize(ActionEvent actionEvent) {
+        cutList = organizeCutList(cutList);
+        cutTable.setItems(cutList);
         makeCuts(cutList);
         printRec();
     }

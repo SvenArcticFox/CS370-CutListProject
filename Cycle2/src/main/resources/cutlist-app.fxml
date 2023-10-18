@@ -83,7 +83,8 @@
               <children>
                 <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="View" textAlignment="CENTER" wrapText="false" />
                         <Rectangle fx:id="rect" arcHeight="5.0" arcWidth="5.0" fill="#d92727" height="487.0" layoutX="8.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="411.0" />
-                        <Pane fx:id="recPane" layoutX="8.0" layoutY="50.0" prefHeight="487.0" prefWidth="411.0" />
+                        <StackPane fx:id="labelPane" alignment="TOP_LEFT" layoutX="8.0" layoutY="50.0" />
+                        <Pane fx:id="recPane" layoutX="8.0" layoutY="50.0" />
               </children>
             </AnchorPane>
           </content>
