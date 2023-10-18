@@ -52,13 +52,14 @@ public class Algorithm {
 
     public static void main(String[] args) {
         Sheet sheet = new Sheet(1000, 1000);
-        Cut[] cuts = new Cut[5];
+        Cut[] cuts = new Cut[6];
 
         cuts[0] = new Cut(500, 500);
         cuts[1] = new Cut(200, 200);
         cuts[2] = new Cut(400, 400);
-        cuts[3] = new Cut(100, 100);
+        cuts[3] = new Cut(75, 75);
         cuts[4] = new Cut(400, 400);
+        cuts[5] = new Cut(50, 50);
 
         /*
         cuts[0] = new Cut(10, 20);
@@ -71,7 +72,6 @@ public class Algorithm {
         cuts[7] = new Cut(12, 3);
         cuts[8] = new Cut(18, 9);
         cuts[9] = new Cut(5, 6);
-
          */
 
         CutTree cutTree = entrance(sheet, cuts);
