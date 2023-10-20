@@ -94,7 +94,7 @@
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" wrapText="false" />
                   <TableView fx:id="cutTable" editable="true" layoutY="41.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="233.0">
                     <columns>
-                      <TableColumn fx:id="lengthCol" prefWidth="75.0" text="Legnth" />
+                      <TableColumn fx:id="lengthCol" prefWidth="75.0" text="Length" />
                       <TableColumn fx:id="widthCol" prefWidth="75.0" text="Width" />
                         <TableColumn fx:id="labelCol" prefWidth="82.0" text="Label" />
                     </columns>
