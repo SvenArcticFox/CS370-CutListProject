@@ -1,25 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs370.cutlist_project.Cycle2.Controller">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs370.cutlist_project.Cycle2.Controller">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -79,6 +67,14 @@
                   <TextField fx:id="cutInputL" layoutX="14.0" layoutY="257.0" promptText="Length" />
                   <TextField fx:id="cutInputW" layoutX="14.0" layoutY="301.0" promptText="Width" />
                   <TextField fx:id="cutInputLabel" layoutX="14.0" layoutY="347.0" promptText="Label" />
+                  <Button fx:id="sheetBut" layoutX="48.0" layoutY="169.0" mnemonicParsing="false" onAction="#sheetMaker" text="Make Sheet" />
+                  <Button fx:id="cutBut" layoutX="21.0" layoutY="400.0" mnemonicParsing="false" onAction="#cutMaker" text="Make Cut" />
+                  <Button fx:id="optBut" layoutX="130.0" layoutY="478.0" mnemonicParsing="false" onAction="#optimize" text="Optimize" />
+                  <Label alignment="CENTER" layoutX="14.0" layoutY="213.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Cut" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font size="18.0" fx:id="x111" />
+                     </font>
+                  </Label>
           </children>
         </AnchorPane>
         <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
@@ -86,8 +82,9 @@
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
               <children>
                 <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="View" textAlignment="CENTER" wrapText="false" />
-                        <Rectangle fx:id="recta" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="487.0" layoutX="8.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="411.0" />
-                        <Pane fx:id="recPane" layoutX="8.0" layoutY="50.0" prefHeight="487.0" prefWidth="411.0" />
+                        <Rectangle fx:id="rect" arcHeight="5.0" arcWidth="5.0" fill="#d92727" height="487.0" layoutX="8.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="411.0" />
+                        <StackPane fx:id="labelPane" alignment="TOP_LEFT" layoutX="8.0" layoutY="50.0" />
+                        <Pane fx:id="recPane" layoutX="8.0" layoutY="50.0" />
               </children>
             </AnchorPane>
           </content>
@@ -95,7 +92,7 @@
         <AnchorPane>
           <children>
             <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" wrapText="false" />
-                  <TableView fx:id="cutTable" layoutY="41.0" prefHeight="200.0" prefWidth="233.0">
+                  <TableView fx:id="cutTable" editable="true" layoutY="41.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="233.0">
                     <columns>
                       <TableColumn fx:id="lengthCol" prefWidth="75.0" text="Legnth" />
                       <TableColumn fx:id="widthCol" prefWidth="75.0" text="Width" />
@@ -113,7 +110,7 @@
             <Font size="11.0" fx:id="x3" />
           </font>
           <textFill>
-            <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
+            <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
           </textFill>
         </Label>
         <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
