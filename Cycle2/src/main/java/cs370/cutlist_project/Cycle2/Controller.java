@@ -121,7 +121,7 @@ public class Controller implements Initializable  {
         {
             recPane.getChildren().add(cut.rec);
             Label l = new Label(cut.getCutPartCode());
-            l.relocate(cut.rec.getX() + (cut.rec.getWidth()/2), cut.rec.getY()+(cut.rec.getHeight()/2));
+            l.relocate(cut.rec.getX() + (cut.rec.getWidth()/2) -10, cut.rec.getY()+(cut.rec.getHeight()/2));
             recPane.getChildren().add(l);
 
             System.out.println(recPane.getChildren());
