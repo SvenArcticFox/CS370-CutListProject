@@ -67,8 +67,25 @@ public class CutTree {
 
         if (addedCut.getWidth() <= leftOverWidth && addedCut.getLength() <= currentNode.cut.getLength()) {
             //Cut sheet off by the length of the last cut
-            currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, addedCut, currentNode.cut.getLength(),
-                    currentNode.cut.getWidth() + addedCut.getWidth(),  currentNode.cut.getLength());
+            if (currentNode.widthAxis != null) {
+                //"looks ahead" and checks to see if the leftover width is greater than or equal to the width of the new cut
+                if (sheet.getWidth() - (currentNode.cut.getWidth() + currentNode.widthAxis.cut.getWidth() + totalCutsWidth)
+                        >= addedCut.getWidth()) {
+                    currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, addedCut, currentNode.cut.getLength(),
+                            currentNode.cut.getWidth() + addedCut.getWidth(),  currentNode.cut.getLength());
+                }
+                // If the leftover width is less than the width of the new cut, add it to the length axis
+                else {
+                    currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut,
+                            currentNode.cut.getLength() + addedCut.getLength(), totalCutsWidth, sheetLength);
+                }
+            }
+            // If the width axis is null, just recursively add the cut to it.
+            else {
+                currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, addedCut, currentNode.cut.getLength(),
+                        currentNode.cut.getWidth() + addedCut.getWidth(),  currentNode.cut.getLength());
+            }
+
         }
         else if (addedCut.getLength() <= leftOverLength /*&& addedCut.getWidth() <= currentNode.cut.getWidth()*/) {
             currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut,
