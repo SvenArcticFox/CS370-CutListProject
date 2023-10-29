@@ -1,6 +1,8 @@
 package cs370.cutlist_project.Cycle2;
 
 
+import cs370.cutlist_project.Cycle2.algorithm.Algorithm;
+import cs370.cutlist_project.Cycle2.algorithm.CutTree;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable  {
@@ -53,6 +57,7 @@ public class Controller implements Initializable  {
 
     @FXML
     private TableColumn<Cut, String> labelCol;
+
 
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     ObservableList<Rectangle> recList = FXCollections.observableArrayList();
@@ -190,9 +195,28 @@ public class Controller implements Initializable  {
 
 
     public void optimize(ActionEvent actionEvent) {
-        cutList = organizeCutList(cutList);
+        ArrayList<Cut> cuts = new ArrayList<Cut>();
+        for(Cut cut: cutList) {
+            cuts.add(cut);
+        }
+        CutTree tree = Algorithm.entrance(s, cuts);
+        cuts = tree.toArrayList(tree.getRoot());
+        int i = 0;
+        for(Cut cut: cuts) {
+            cutList.set(i, cuts.get(i));
+            i++;
+        }
+
+       // cutList = organizeCutList(cutList);
+       // Cut[] cuts = new Cut[cutList.size()];
+      /*  for(int i = 0; i < cutList.size(); i++) {
+            cuts[i] = cutList.get(i);
+        }*/
         cutTable.setItems(cutList);
         makeCuts(cutList);
         printRec();
+        for(Cut cut: cutList) {
+            System.out.println("Length: " + cut.getLength() + "  Width: " + cut.getWidth());
+        }
     }
 }

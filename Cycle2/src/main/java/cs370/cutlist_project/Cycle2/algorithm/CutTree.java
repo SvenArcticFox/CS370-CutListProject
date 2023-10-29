@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 public class CutTree {
+    private ArrayList<Cut> cuts = new ArrayList<Cut>();
     class Node {
         Sheet sheet;
 
@@ -38,9 +39,14 @@ public class CutTree {
         this.sheet = null;
     }
 
-    CutTree(Sheet sheet) {
+    public CutTree(Sheet sheet) {
         this.root = null;
         this.sheet = sheet;
+    }
+
+
+    public Node getRoot() {
+        return root;
     }
 
     /**
@@ -60,7 +66,7 @@ public class CutTree {
             return new Node(addedCut/*, addedSheet*/);
         }
 
-        System.out.println(totalCutsWidth + "\t" + totalCutsLength);
+       // System.out.println(totalCutsWidth + "\t" + totalCutsLength);
 
         double leftOverLength = sheetLength - totalCutsLength;
         double leftOverWidth = sheet.getWidth() - totalCutsWidth;
@@ -124,6 +130,17 @@ public class CutTree {
                 + currentNode.cut.getWidth()+ "\n");
 
         printTreeUtil(currentNode.lengthAxis, space, spaceCount);
+    }
+    public ArrayList<Cut> toArrayList(Node node) {
+        if(node == null) {
+            return cuts;
+        }
+        cuts.add(node.cut);
+        cuts = toArrayList(node.widthAxis);
+        cuts = toArrayList(node.lengthAxis);
+
+        return cuts;
+
     }
 
 }
