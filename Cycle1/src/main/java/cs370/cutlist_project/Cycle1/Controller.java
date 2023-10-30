@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
     public Button cutButton;
     public Pane rPane;
-    Sheet s = new Sheet();
+    Sheet s = new Sheet(0,0);
 
     @FXML
     public Rectangle rec;
