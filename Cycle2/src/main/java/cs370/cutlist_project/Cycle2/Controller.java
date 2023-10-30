@@ -130,6 +130,10 @@ public class Controller implements Initializable  {
             recPane.getChildren().add(l);
         }
     }
+
+    /*
+
+     */
 //Sets the x and ys of the cuts on the sheet.
     public void makeCuts(ObservableList<Cut> cl){
         if(!recPane.getChildren().isEmpty())
@@ -146,13 +150,13 @@ public class Controller implements Initializable  {
             do {
                 cut.rec.setX(x);
                 cut.rec.setY(y);
-                x += 0.1;
+                x += 0.0001;
                 if(isOverlap && x + cut.rec.getWidth() > rectSheet.getWidth())
                 {
                     x = 0.0;
-                    y += .1;
+                    y += .0001;
                 }
-                else if(isOverlap && x + cut.rec.getWidth() > rectSheet.getWidth() && y + cut.rec.getHeight() > rectSheet.getHeight())
+                else if(isOverlap && x + cut.rec.getWidth() > rectSheet.getWidth() && y +cut.rec.getHeight() > rectSheet.getHeight())
                 {
                     cutList.remove(cut);
                     a.setAlertType(Alert.AlertType.ERROR);
@@ -161,7 +165,7 @@ public class Controller implements Initializable  {
                     break;
                 }
                 isOverlap = recList.stream()
-                        .anyMatch(rect -> cut.rec.getBoundsInParent().intersects(rect.getBoundsInParent()));
+                        .anyMatch(rectSheet -> cut.rec.getBoundsInParent().intersects(rectSheet.getBoundsInParent()));
 
             } while (isOverlap);
             recList.add(cut.rec);
