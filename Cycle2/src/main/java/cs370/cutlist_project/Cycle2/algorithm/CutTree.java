@@ -55,7 +55,7 @@ public class CutTree {
     private Node recursiveAdd(Node currentNode, Cut addedCut, double totalCutsLength, double totalCutsWidth,
                               double sheetLength) {
         if (currentNode == null) {
-            return new Node(addedCut/*, addedSheet*/);
+            return new Node(addedCut);
         }
 
         System.out.println(totalCutsWidth + "\t" + totalCutsLength);
