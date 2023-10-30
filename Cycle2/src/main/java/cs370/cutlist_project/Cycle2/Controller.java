@@ -24,12 +24,14 @@ public class Controller implements Initializable  {
     private TextField sheetInputL;
     @FXML
     public StackPane labelPane;
+
     @FXML
     private TextField sheetInputW;
 
     @FXML
     private TextField cutInputL;
     Alert a = new Alert(Alert.AlertType.NONE);
+
     @FXML
     private TextField cutInputW;
 
@@ -135,7 +137,7 @@ public class Controller implements Initializable  {
 
      */
 //Sets the x and ys of the cuts on the sheet.
-    public void makeCuts(ObservableList<Cut> cl){
+    public void displayCuts(ObservableList<Cut> cl){
         if(!recPane.getChildren().isEmpty())
         {
             recPane.getChildren().clear();
@@ -150,20 +152,21 @@ public class Controller implements Initializable  {
             do {
                 cut.rec.setX(x);
                 cut.rec.setY(y);
-                x += 0.0001;
+                x += 1;
                 if(isOverlap && x + cut.rec.getWidth() > rectSheet.getWidth())
                 {
                     x = 0.0;
-                    y += .0001;
+                    y += 1;
+                    if(y +cut.rec.getHeight() > rectSheet.getHeight())
+                    {
+                        cutList.remove(cut);
+                        a.setAlertType(Alert.AlertType.ERROR);
+                        a.setContentText("The cut did not fit, removing " + cut.getNotes());
+                        a.showAndWait();
+                        break;
+                    }
                 }
-                else if(isOverlap && x + cut.rec.getWidth() > rectSheet.getWidth() && y +cut.rec.getHeight() > rectSheet.getHeight())
-                {
-                    cutList.remove(cut);
-                    a.setAlertType(Alert.AlertType.ERROR);
-                    a.setContentText("The cut did not fit, removing " + cut.getNotes());
-                    a.showAndWait();
-                    break;
-                }
+
                 isOverlap = recList.stream()
                         .anyMatch(rectSheet -> cut.rec.getBoundsInParent().intersects(rectSheet.getBoundsInParent()));
 
@@ -202,7 +205,7 @@ public class Controller implements Initializable  {
     public void optimize(ActionEvent actionEvent) {
         cutList = organizeCutList(cutList);
         cutTable.setItems(cutList);
-        makeCuts(cutList);
+        displayCuts(cutList);
         printRec();
     }
 }
