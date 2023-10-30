@@ -37,7 +37,7 @@ public class Controller implements Initializable  {
     private TextField cutInputLabel;
 
     @FXML
-    private Rectangle rect;
+    private Rectangle rectSheet;
 
     @FXML
     private Pane recPane;
@@ -78,9 +78,9 @@ public class Controller implements Initializable  {
         {
             s.setLength(Double.parseDouble(sheetInputL.getText()));
             s.setWidth(Double.parseDouble(sheetInputW.getText()));
-            rect.setVisible(true);
-            rect.setHeight(s.getLength());
-            rect.setWidth(s.getWidth());
+            rectSheet.setVisible(true);
+            rectSheet.setHeight(s.getLength());
+            rectSheet.setWidth(s.getWidth());
             recPane.setPrefHeight(s.getLength());
             recPane.setPrefWidth(s.getWidth());
         }
@@ -126,10 +126,8 @@ public class Controller implements Initializable  {
         {
             recPane.getChildren().add(cut.rec);
             Label l = new Label(cut.getCutPartCode());
-            l.relocate(cut.rec.getX() + (cut.rec.getWidth()/2) -10, cut.rec.getY()+(cut.rec.getHeight()/2));
+            l.relocate(cut.rec.getX() + (cut.rec.getWidth()/2) -10, cut.rec.getY()+(cut.rec.getHeight()/2) - 10);
             recPane.getChildren().add(l);
-
-            System.out.println(recPane.getChildren());
         }
     }
 //Sets the x and ys of the cuts on the sheet.
@@ -148,13 +146,13 @@ public class Controller implements Initializable  {
             do {
                 cut.rec.setX(x);
                 cut.rec.setY(y);
-                x += 0.01;
-                if(isOverlap && x + cut.rec.getWidth() > rect.getWidth())
+                x += 0.1;
+                if(isOverlap && x + cut.rec.getWidth() > rectSheet.getWidth())
                 {
                     x = 0.0;
-                    y += .01;
+                    y += .1;
                 }
-                else if(isOverlap && x + cut.rec.getWidth() > rect.getWidth() && y +cut.rec.getHeight() > rect.getHeight())
+                else if(isOverlap && x + cut.rec.getWidth() > rectSheet.getWidth() && y + cut.rec.getHeight() > rectSheet.getHeight())
                 {
                     cutList.remove(cut);
                     a.setAlertType(Alert.AlertType.ERROR);
