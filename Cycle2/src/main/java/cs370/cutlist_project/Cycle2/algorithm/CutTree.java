@@ -9,13 +9,15 @@ import java.util.ArrayList;
 
 
 public class CutTree {
-    class Node {
-        Sheet sheet;
+    public class Node {
 
+        @Getter
         Node widthAxis;
 
+        @Getter
         Node lengthAxis;
 
+        @Getter
         Cut cut;
 
         Node(Cut cut/*, Sheet sheet*/) {

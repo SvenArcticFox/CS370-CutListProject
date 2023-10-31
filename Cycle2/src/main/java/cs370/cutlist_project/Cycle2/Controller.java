@@ -16,6 +16,8 @@ import javafx.scene.shape.Rectangle;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import cs370.cutlist_project.Cycle2.algorithm.*;
+
 public class Controller implements Initializable  {
 
     //Variables
@@ -136,6 +138,35 @@ public class Controller implements Initializable  {
      */
 //Sets the x and ys of the cuts on the sheet.
     public void makeCuts(ObservableList<Cut> cl){
+        CutTree optimizedCuts = Algorithm.entrance(s, (Cut[]) cl.toArray());
+        CutTree.Node rootNode = optimizedCuts.getRoot();
+
+        double x = 0;
+        double y = 0;
+
+        CutTree.Node prevNode = optimizedCuts.getRoot();
+        CutTree.Node currentNode = optimizedCuts.getRoot().getWidthAxis();
+
+        while (currentNode != null) {
+            x += prevNode.getCut().getWidth();
+            currentNode.getCut().setRec(new Rectangle(x , y));
+            if (currentNode.getWidthAxis() != null)
+                prevNode = currentNode;
+            currentNode = currentNode.getWidthAxis();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
         if(!recPane.getChildren().isEmpty())
         {
             recPane.getChildren().clear();
@@ -169,7 +200,7 @@ public class Controller implements Initializable  {
 
             } while (isOverlap);
             recList.add(cut.rec);
-        }
+        }*/
     }
     //Making a class that will organize the cutList to have it ascending order based on
     //Area, taking the area of each cut, putting it in its own value and adding it to its own
