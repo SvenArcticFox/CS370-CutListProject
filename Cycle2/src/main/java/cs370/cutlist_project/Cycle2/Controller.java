@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable  {
@@ -57,6 +59,7 @@ public class Controller implements Initializable  {
 
     @FXML
     private TableColumn<Cut, String> labelCol;
+
 
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     //Initializes the table view, allowing for the values of the cuts to be shown.
@@ -207,9 +210,11 @@ public class Controller implements Initializable  {
     //The activation of the whole algorithm that was made, it organizes the cut list in descending order, puts them on the
     //tableview, then finds their x and y, then prints.
     public void optimize(ActionEvent actionEvent) {
-        //cutList = organizeCutList(cutList);
         cutTable.setItems(cutList);
         displayCuts(cutList);
         printRec();
+      /*  for(Cut cut: cutList) {
+            System.out.println("Length: " + cut.getLength() + "  Width: " + cut.getWidth());
+        }*/
     }
 }

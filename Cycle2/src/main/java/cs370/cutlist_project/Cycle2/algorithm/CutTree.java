@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 
 public class CutTree {
-    public class Node {
 
+    public class Node {
         @Getter
         Node widthAxis;
 
@@ -40,9 +40,14 @@ public class CutTree {
         this.sheet = null;
     }
 
-    CutTree(Sheet sheet) {
+    public CutTree(Sheet sheet) {
         this.root = null;
         this.sheet = sheet;
+    }
+
+
+    public Node getRoot() {
+        return root;
     }
 
     /**
@@ -61,9 +66,9 @@ public class CutTree {
         if (currentNode == null) {
             return new Node(addedCut);
         }
-        //print out the width and length of the cut
-        System.out.println(totalCutsWidth + "\t" + totalCutsLength);
-        //calculate the leftover length and width of the sheet
+
+       // System.out.println(totalCutsWidth + "\t" + totalCutsLength);
+
         double leftOverLength = sheetLength - totalCutsLength;
         double leftOverWidth = sheet.getWidth() - totalCutsWidth;
 
@@ -129,5 +134,3 @@ public class CutTree {
     }
 
 }
-
-
