@@ -27,6 +27,7 @@ public class Cut {
     @Setter
     public Rectangle rec = new Rectangle(0,0);
 
+
     public Cut(double length, double width) {
         this.length = length;
         this.width = width;
