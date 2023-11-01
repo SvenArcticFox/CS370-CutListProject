@@ -9,13 +9,15 @@ import java.util.ArrayList;
 
 
 public class CutTree {
-    class Node {
-        Sheet sheet;
+    public class Node {
 
+        @Getter
         Node widthAxis;
 
+        @Getter
         Node lengthAxis;
 
+        @Getter
         Cut cut;
 
         Node(Cut cut/*, Sheet sheet*/) {
@@ -55,9 +57,7 @@ public class CutTree {
     private Node recursiveAdd(Node currentNode, Cut addedCut, double totalCutsLength, double totalCutsWidth,
                               double sheetLength) {
         if (currentNode == null) {
-            //totalCutsLength += addedCut.getLength();
-            //totalCutsWidth += addedCut.getWidth();
-            return new Node(addedCut/*, addedSheet*/);
+            return new Node(addedCut);
         }
 
         System.out.println(totalCutsWidth + "\t" + totalCutsLength);
@@ -87,7 +87,7 @@ public class CutTree {
             }
 
         }
-        else if (addedCut.getLength() <= leftOverLength /*&& addedCut.getWidth() <= currentNode.cut.getWidth()*/) {
+        else if (addedCut.getLength() <= leftOverLength) {
             currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut,
                     currentNode.cut.getLength() + addedCut.getLength(), totalCutsWidth, sheetLength);
         }
