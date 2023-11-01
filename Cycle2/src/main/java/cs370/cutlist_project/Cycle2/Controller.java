@@ -26,12 +26,14 @@ public class Controller implements Initializable  {
     private TextField sheetInputL;
     @FXML
     public StackPane labelPane;
+
     @FXML
     private TextField sheetInputW;
 
     @FXML
     private TextField cutInputL;
     Alert a = new Alert(Alert.AlertType.NONE);
+
     @FXML
     private TextField cutInputW;
 
@@ -71,6 +73,7 @@ public class Controller implements Initializable  {
     //Makes the value of the sheet, if the values of the inputValues are nothing it wont go through,
     //also sets the dimensions of the rectangle
     public void sheetMaker(ActionEvent actionEvent) {
+        //If the inputs for the sheet are empty, create an error message
         if(sheetInputW.getText().isEmpty() || sheetInputL.getText().isEmpty()) {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("You do not have a value for the Sheet");
@@ -89,6 +92,7 @@ public class Controller implements Initializable  {
     }
     //Creates the cut and put it in the observablelist of Cuts
     public void cutMaker(ActionEvent actionEvent) {
+        //if any value is empty, create an error message
         if(cutInputL.getText().isEmpty() || cutInputW.getText().isEmpty() || cutInputLabel.getText().isEmpty())
         {
             a.setAlertType(Alert.AlertType.ERROR);
@@ -132,15 +136,13 @@ public class Controller implements Initializable  {
             recPane.getChildren().add(l);
         }
     }
-
-    /*
-
-     */
 //Sets the x and ys of the cuts on the sheet.
-    public void makeCuts(ObservableList<Cut> cl){
-        if (!recPane.getChildren().isEmpty()) {
+    public void displayCuts(ObservableList<Cut> cl){
+        if(!recPane.getChildren().isEmpty())
+        {
             recPane.getChildren().clear();
         }
+
 
         Cut[] cut = new Cut[cl.size()];
         CutTree optimizedCuts = Algorithm.entrance(s, cl.toArray(cut));
@@ -204,7 +206,7 @@ public class Controller implements Initializable  {
     public void optimize(ActionEvent actionEvent) {
         //cutList = organizeCutList(cutList);
         cutTable.setItems(cutList);
-        makeCuts(cutList);
+        displayCuts(cutList);
         printRec();
     }
 }
