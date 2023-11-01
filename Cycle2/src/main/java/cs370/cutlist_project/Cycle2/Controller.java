@@ -138,70 +138,41 @@ public class Controller implements Initializable  {
      */
 //Sets the x and ys of the cuts on the sheet.
     public void makeCuts(ObservableList<Cut> cl){
-        CutTree optimizedCuts = Algorithm.entrance(s, (Cut[]) cl.toArray());
+        if (!recPane.getChildren().isEmpty()) {
+            recPane.getChildren().clear();
+        }
+
+        Cut[] cut = new Cut[cl.size()];
+        CutTree optimizedCuts = Algorithm.entrance(s, cl.toArray(cut));
         CutTree.Node rootNode = optimizedCuts.getRoot();
 
-        double x = 0;
-        double y = 0;
-
-        CutTree.Node prevNode = optimizedCuts.getRoot();
-        CutTree.Node currentNode = optimizedCuts.getRoot().getWidthAxis();
-
-        while (currentNode != null) {
-            x += prevNode.getCut().getWidth();
-            currentNode.getCut().setRec(new Rectangle(x , y));
-            if (currentNode.getWidthAxis() != null)
-                prevNode = currentNode;
-            currentNode = currentNode.getWidthAxis();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        if(!recPane.getChildren().isEmpty())
-        {
-            recPane.getChildren().clear();
-            recList.clear();
-        }
-        for(Cut cut : cl)
-        {
-            boolean isOverlap = false;
-            double x =0.0;// Sets Each cut as (0,0)
-            double y =0.0;
-            //When initially set up, it will find the
-            do {
-                cut.rec.setX(x);
-                cut.rec.setY(y);
-                x += 0.0001;
-                if(isOverlap && x + cut.rec.getWidth() > rectSheet.getWidth())
-                {
-                    x = 0.0;
-                    y += .0001;
-                }
-                else if(isOverlap && x + cut.rec.getWidth() > rectSheet.getWidth() && y +cut.rec.getHeight() > rectSheet.getHeight())
-                {
-                    cutList.remove(cut);
-                    a.setAlertType(Alert.AlertType.ERROR);
-                    a.setContentText("The cut did not fit, removing " + cut.getNotes());
-                    a.showAndWait();
-                    break;
-                }
-                isOverlap = recList.stream()
-                        .anyMatch(rectSheet -> cut.rec.getBoundsInParent().intersects(rectSheet.getBoundsInParent()));
-
-            } while (isOverlap);
-            recList.add(cut.rec);
-        }*/
+        traverseTree(rootNode , null , false);
     }
+
+    private void traverseTree(CutTree.Node currentNode, CutTree.Node prevNode, boolean placeOnWidthAxis) {
+        if (prevNode == null) {
+            currentNode.getCut().getRec().setX(0);
+            currentNode.getCut().getRec().setY(0);
+        }
+        else if (placeOnWidthAxis) {
+            currentNode.getCut().getRec().setX(prevNode.getCut().getRec().getX() + prevNode.getCut().getWidth());
+            currentNode.getCut().getRec().setY(prevNode.getCut().getRec().getY());
+        }
+
+        else {
+            currentNode.getCut().getRec().setX(prevNode.getCut().getRec().getX());
+            currentNode.getCut().getRec().setY(prevNode.getCut().getRec().getY() + prevNode.getCut().getLength());
+        }
+
+        if (currentNode.getWidthAxis() != null) {
+            traverseTree(currentNode.getWidthAxis() , currentNode , true);
+        }
+        if (currentNode.getLengthAxis() != null) {
+            traverseTree(currentNode.getLengthAxis() , currentNode , false);
+        }
+
+    }
+
     //Making a class that will organize the cutList to have it ascending order based on
     //Area, taking the area of each cut, putting it in its own value and adding it to its own
     //ObservableList and then making it back.
@@ -231,7 +202,7 @@ public class Controller implements Initializable  {
     //The activation of the whole algorithm that was made, it organizes the cut list in descending order, puts them on the
     //tableview, then finds their x and y, then prints.
     public void optimize(ActionEvent actionEvent) {
-        cutList = organizeCutList(cutList);
+        //cutList = organizeCutList(cutList);
         cutTable.setItems(cutList);
         makeCuts(cutList);
         printRec();
