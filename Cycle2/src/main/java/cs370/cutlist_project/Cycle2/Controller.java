@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import cs370.cutlist_project.Cycle2.algorithm.*;
+
 public class Controller implements Initializable  {
 
     //Variables
@@ -28,11 +30,13 @@ public class Controller implements Initializable  {
     private TextField sheetInputL;
     @FXML
     public StackPane labelPane;
+
     @FXML
     private TextField sheetInputW;
 
     @FXML
     private TextField cutInputL;
+    Alert a = new Alert(Alert.AlertType.NONE);
 
     @FXML
     private TextField cutInputW;
@@ -41,7 +45,7 @@ public class Controller implements Initializable  {
     private TextField cutInputLabel;
 
     @FXML
-    private Rectangle rect;
+    private Rectangle rectSheet;
 
     @FXML
     private Pane recPane;
@@ -61,6 +65,7 @@ public class Controller implements Initializable  {
 
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     ObservableList<Rectangle> recList = FXCollections.observableArrayList();
+    //Initializes the table view, allowing for the values of the cuts to be shown.
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lengthCol.setCellValueFactory(new PropertyValueFactory<>("length"));
@@ -70,35 +75,40 @@ public class Controller implements Initializable  {
         cutTable.setItems(cutList);
     }
 
-
+    //Makes the value of the sheet, if the values of the inputValues are nothing it wont go through,
+    //also sets the dimensions of the rectangle
     public void sheetMaker(ActionEvent actionEvent) {
-        if(!sheetInputL.getText().isEmpty() || !sheetInputW.getText().isEmpty()) {
-            s.setLength(Double.parseDouble(sheetInputL.getText()));
-            s.setWidth(Double.parseDouble(sheetInputW.getText()));
-            rect.setVisible(true);
-            rect.setHeight(s.getLength());
-            rect.setWidth(s.getWidth());
-            recPane.setPrefHeight(s.getLength());
-            recPane.setPrefWidth(s.getWidth());
+        //If the inputs for the sheet are empty, create an error message
+        if(sheetInputW.getText().isEmpty() || sheetInputL.getText().isEmpty()) {
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("You do not have a value for the Sheet");
+            a.showAndWait();
         }
         else
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.showAndWait();
+            s.setLength(Double.parseDouble(sheetInputL.getText()));
+            s.setWidth(Double.parseDouble(sheetInputW.getText()));
+            rectSheet.setVisible(true);
+            rectSheet.setHeight(s.getLength());
+            rectSheet.setWidth(s.getWidth());
+            recPane.setPrefHeight(s.getLength());
+            recPane.setPrefWidth(s.getWidth());
         }
     }
-
+    //Creates the cut and put it in the observablelist of Cuts
     public void cutMaker(ActionEvent actionEvent) {
-        if(!cutInputL.getText().isEmpty() || !cutInputW.getText().isEmpty() || !cutInputLabel.getText().isEmpty())
+        //if any value is empty, create an error message
+        if(cutInputL.getText().isEmpty() || cutInputW.getText().isEmpty() || cutInputLabel.getText().isEmpty())
         {
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("You do not have a value for the Cut");
+            a.showAndWait();
+        }
+        else {
             Cut c = new Cut(Double.parseDouble(cutInputL.getText()),Double.parseDouble(cutInputW.getText()),cutInputLabel.getText());
             c.rec.setFill(Color.CYAN);
             c.rec.setStroke(Color.GRAY);
             cutList.add(c);
-        }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.showAndWait();
         }
 
     }
@@ -120,52 +130,56 @@ public class Controller implements Initializable  {
 
         return largest;
     }*/
+    //Prints the rectangles on screen, and puts the labels in the center of each cut.
     public void printRec()
     {
         for (Cut cut : cutList)
         {
             recPane.getChildren().add(cut.rec);
             Label l = new Label(cut.getCutPartCode());
-            l.relocate(cut.rec.getX() + (cut.rec.getWidth()/2), cut.rec.getY()+(cut.rec.getHeight()/2));
+            l.relocate(cut.rec.getX() + (cut.rec.getWidth()/2) -10, cut.rec.getY()+(cut.rec.getHeight()/2) - 10);
             recPane.getChildren().add(l);
-
         }
     }
-
-    public void makeCuts(ObservableList<Cut> cl){
+//Sets the x and ys of the cuts on the sheet.
+    public void displayCuts(ObservableList<Cut> cl){
         if(!recPane.getChildren().isEmpty())
         {
             recPane.getChildren().clear();
-            recList.clear();
         }
-        for(Cut cut : cl)
-        {
-            boolean isOverlap = false;
-            double x =0.0;// Sets Each cut as (0,0)
-            double y =0.0;
-            //When initially set up, it will find the
-            do {
-                cut.rec.setX(x);
-                cut.rec.setY(y);
-                x += 0.01;
-                if(isOverlap && x + cut.rec.getWidth() > rect.getWidth())
-                {
-                    x = 0.0;
-                    y += .01;
-                }
-                else if(isOverlap && x + cut.rec.getWidth() > rect.getWidth() && y +cut.rec.getHeight() > rect.getHeight())
-                {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.showAndWait();
-                    break;
-                }
-                isOverlap = recList.stream()
-                        .anyMatch(rect -> cut.rec.getBoundsInParent().intersects(rect.getBoundsInParent()));
 
-            } while (isOverlap);
-            recList.add(cut.rec);
-        }
+
+        Cut[] cut = new Cut[cl.size()];
+        CutTree optimizedCuts = Algorithm.entrance(s, cl.toArray(cut));
+        CutTree.Node rootNode = optimizedCuts.getRoot();
+
+        traverseTree(rootNode , null , false);
     }
+
+    private void traverseTree(CutTree.Node currentNode, CutTree.Node prevNode, boolean placeOnWidthAxis) {
+        if (prevNode == null) {
+            currentNode.getCut().getRec().setX(0);
+            currentNode.getCut().getRec().setY(0);
+        }
+        else if (placeOnWidthAxis) {
+            currentNode.getCut().getRec().setX(prevNode.getCut().getRec().getX() + prevNode.getCut().getWidth());
+            currentNode.getCut().getRec().setY(prevNode.getCut().getRec().getY());
+        }
+
+        else {
+            currentNode.getCut().getRec().setX(prevNode.getCut().getRec().getX());
+            currentNode.getCut().getRec().setY(prevNode.getCut().getRec().getY() + prevNode.getCut().getLength());
+        }
+
+        if (currentNode.getWidthAxis() != null) {
+            traverseTree(currentNode.getWidthAxis() , currentNode , true);
+        }
+        if (currentNode.getLengthAxis() != null) {
+            traverseTree(currentNode.getLengthAxis() , currentNode , false);
+        }
+
+    }
+
     //Making a class that will organize the cutList to have it ascending order based on
     //Area, taking the area of each cut, putting it in its own value and adding it to its own
     //ObservableList and then making it back.
@@ -192,27 +206,11 @@ public class Controller implements Initializable  {
         return finale;
     }
 
-
+    //The activation of the whole algorithm that was made, it organizes the cut list in descending order, puts them on the
+    //tableview, then finds their x and y, then prints.
     public void optimize(ActionEvent actionEvent) {
-        ArrayList<Cut> cuts = new ArrayList<Cut>();
-        for(Cut cut: cutList) {
-            cuts.add(cut);
-        }
-        CutTree tree = Algorithm.entrance(s, cuts);
-        cuts = tree.toArrayList(tree.getRoot());
-        int i = 0;
-        for(Cut cut: cuts) {
-            cutList.set(i, cuts.get(i));
-            i++;
-        }
-
-       // cutList = organizeCutList(cutList);
-       // Cut[] cuts = new Cut[cutList.size()];
-      /*  for(int i = 0; i < cutList.size(); i++) {
-            cuts[i] = cutList.get(i);
-        }*/
         cutTable.setItems(cutList);
-        makeCuts(cutList);
+        displayCuts(cutList);
         printRec();
       /*  for(Cut cut: cutList) {
             System.out.println("Length: " + cut.getLength() + "  Width: " + cut.getWidth());
