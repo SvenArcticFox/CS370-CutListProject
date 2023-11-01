@@ -71,6 +71,7 @@ public class Controller implements Initializable  {
     //Makes the value of the sheet, if the values of the inputValues are nothing it wont go through,
     //also sets the dimensions of the rectangle
     public void sheetMaker(ActionEvent actionEvent) {
+        //If the inputs for the sheet are empty, create an error message
         if(sheetInputW.getText().isEmpty() || sheetInputL.getText().isEmpty()) {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("You do not have a value for the Sheet");
@@ -89,6 +90,7 @@ public class Controller implements Initializable  {
     }
     //Creates the cut and put it in the observablelist of Cuts
     public void cutMaker(ActionEvent actionEvent) {
+        //if any value is empty, create an error message
         if(cutInputL.getText().isEmpty() || cutInputW.getText().isEmpty() || cutInputLabel.getText().isEmpty())
         {
             a.setAlertType(Alert.AlertType.ERROR);
@@ -132,10 +134,6 @@ public class Controller implements Initializable  {
             recPane.getChildren().add(l);
         }
     }
-
-    /*
-
-     */
 //Sets the x and ys of the cuts on the sheet.
     public void displayCuts(ObservableList<Cut> cl){
         if(!recPane.getChildren().isEmpty())
@@ -152,14 +150,16 @@ public class Controller implements Initializable  {
             do {
                 cut.rec.setX(x);
                 cut.rec.setY(y);
-                x += 1;
+                x += .01;
                 if(isOverlap && x + cut.rec.getWidth() > rectSheet.getWidth())
                 {
                     x = 0.0;
-                    y += 1;
-                    if(y +cut.rec.getHeight() > rectSheet.getHeight())
+                    y += .01;
+                    double recLen = rectSheet.getHeight();
+                    if(y + cut.rec.getHeight() > rectSheet.getHeight())
                     {
-                        cutList.remove(cut);
+                        cutList.remove(cl.indexOf(cut));
+                        cl.remove(cut);
                         a.setAlertType(Alert.AlertType.ERROR);
                         a.setContentText("The cut did not fit, removing " + cut.getNotes());
                         a.showAndWait();
