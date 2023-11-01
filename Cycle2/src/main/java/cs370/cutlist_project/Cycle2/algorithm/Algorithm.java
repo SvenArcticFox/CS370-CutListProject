@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class Algorithm {
 
-    public static CutTree entrance(Sheet sheet, ArrayList<Cut> cuts) {
-        quickSort(cuts, 0, cuts.size() -1);
+    public static CutTree entrance(Sheet sheet, Cut[] cuts) {
+        quickSort(cuts, 0, cuts.length -1);
         CutTree cutTree = new CutTree(sheet);
 
       /*  for (Cut cut : cuts) {
@@ -22,7 +22,7 @@ public class Algorithm {
         return cutTree;
     }
 
-    private static void quickSort(ArrayList<Cut> arr, int lowIndex, int highIndex) {
+    private static void quickSort(Cut[] arr, int lowIndex, int highIndex) {
         if (lowIndex < highIndex) {
             int partitionIndex = partition(arr, lowIndex, highIndex);
 
@@ -31,43 +31,39 @@ public class Algorithm {
         }
     }
 
-    private static int partition(ArrayList<Cut> arr, int lowIndex, int highIndex) {
-        Cut pivot = arr.get(highIndex);
+    private static int partition(Cut[] arr, int lowIndex, int highIndex) {
+        Cut pivot = arr[highIndex];
         int i = (lowIndex-1);
 
         for (int j = lowIndex; j < highIndex; j++) {
-            if (arr.get(j).getArea() >= pivot.getArea()) {
+            if (arr[j].getArea() >= pivot.getArea()) {
                 i++;
 
-                Cut swapTemp = arr.get(i);
-                arr.set(i, arr.get(j));
-                arr.set(j, swapTemp);
+                Cut swapTemp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = swapTemp;
 
             }
         }
 
-        Cut swapTemp = arr.get(i + 1);
-        arr.set(i+1, arr.get(highIndex));
-        arr.set(highIndex, swapTemp);
+        Cut swapTemp = arr[i + 1];
+        arr[i+1] =  arr[highIndex];
+        arr[highIndex] = swapTemp;
 
         return i+1;
     }
 
     public static void main(String[] args) {
         Sheet sheet = new Sheet(1000, 1000);
-         ArrayList<Cut> cuts = new ArrayList<Cut>();
+         Cut[] cuts = new Cut[6];
 
-        cuts.add(new Cut(500, 500));
-        cuts.add(new Cut(200, 200));
-        cuts.add(new Cut(400, 400));
-        cuts.add(new Cut(75, 75));
-        cuts.add(new Cut(400, 400));
-        cuts.add(new Cut(50, 50));
-
-        System.out.println("Before:");
-        for(Cut cut: cuts) {
-            System.out.println("Length: " + cut.getLength() + "  Width: " + cut.getWidth());
-        }
+        cuts[0] = new Cut(500, 500);
+        cuts[1] = new Cut(200, 200);
+        cuts[2] = new Cut(400, 400);
+        cuts[3] = new Cut(75, 75);
+        cuts[4] = new Cut(400, 400);
+        cuts[5] = new Cut(50, 50);
+        
 
         /*
         cuts[0] = new Cut(10, 20);
@@ -83,11 +79,6 @@ public class Algorithm {
          */
 
         CutTree cutTree = entrance(sheet, cuts);
-        cuts = cutTree.toArrayList(cutTree.getRoot());
 
-        System.out.println("After:");
-        for(Cut cut: cuts) {
-            System.out.println("Length: " + cut.getLength() + "  Width: " + cut.getWidth());
-        }
     }
 }

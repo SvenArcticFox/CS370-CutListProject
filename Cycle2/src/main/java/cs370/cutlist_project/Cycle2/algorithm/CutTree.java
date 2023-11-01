@@ -131,17 +131,6 @@ public class CutTree {
 
         printTreeUtil(currentNode.lengthAxis, space, spaceCount);
     }
-    public ArrayList<Cut> toArrayList(Node node) {
-        if(node == null) {
-            return cuts;
-        }
-        cuts.add(node.cut);
-        cuts = toArrayList(node.widthAxis);
-        cuts = toArrayList(node.lengthAxis);
-
-        return cuts;
-
-    }
 
 }
 
