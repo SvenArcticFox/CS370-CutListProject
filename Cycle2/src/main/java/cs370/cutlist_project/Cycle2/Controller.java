@@ -1,6 +1,8 @@
 package cs370.cutlist_project.Cycle2;
 
 
+import cs370.cutlist_project.Cycle2.algorithm.Algorithm;
+import cs370.cutlist_project.Cycle2.algorithm.CutTree;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import cs370.cutlist_project.Cycle2.algorithm.*;
@@ -57,6 +61,7 @@ public class Controller implements Initializable  {
 
     @FXML
     private TableColumn<Cut, String> labelCol;
+
 
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     ObservableList<Rectangle> recList = FXCollections.observableArrayList();
@@ -204,9 +209,11 @@ public class Controller implements Initializable  {
     //The activation of the whole algorithm that was made, it organizes the cut list in descending order, puts them on the
     //tableview, then finds their x and y, then prints.
     public void optimize(ActionEvent actionEvent) {
-        //cutList = organizeCutList(cutList);
         cutTable.setItems(cutList);
         displayCuts(cutList);
         printRec();
+      /*  for(Cut cut: cutList) {
+            System.out.println("Length: " + cut.getLength() + "  Width: " + cut.getWidth());
+        }*/
     }
 }
