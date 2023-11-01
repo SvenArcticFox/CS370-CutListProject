@@ -129,7 +129,6 @@ public class Controller implements Initializable  {
             l.relocate(cut.rec.getX() + (cut.rec.getWidth()/2), cut.rec.getY()+(cut.rec.getHeight()/2));
             recPane.getChildren().add(l);
 
-            System.out.println(recPane.getChildren());
         }
     }
 
@@ -215,8 +214,8 @@ public class Controller implements Initializable  {
         cutTable.setItems(cutList);
         makeCuts(cutList);
         printRec();
-        for(Cut cut: cutList) {
+      /*  for(Cut cut: cutList) {
             System.out.println("Length: " + cut.getLength() + "  Width: " + cut.getWidth());
-        }
+        }*/
     }
 }
