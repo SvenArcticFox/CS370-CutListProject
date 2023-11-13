@@ -1,6 +1,8 @@
 package cs370.cutlist_project.Cycle2;
 
 
+import cs370.cutlist_project.Cycle2.algorithm.Algorithm;
+import cs370.cutlist_project.Cycle2.algorithm.CutTree;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,9 +16,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-
-import cs370.cutlist_project.Cycle2.algorithm.*;
 
 public class Controller implements Initializable  {
 
@@ -58,15 +60,15 @@ public class Controller implements Initializable  {
     @FXML
     private TableColumn<Cut, String> labelCol;
 
+
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
-    ObservableList<Rectangle> recList = FXCollections.observableArrayList();
     //Initializes the table view, allowing for the values of the cuts to be shown.
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lengthCol.setCellValueFactory(new PropertyValueFactory<>("length"));
         widthCol.setCellValueFactory(new PropertyValueFactory<>("width"));
-
         labelCol.setCellValueFactory(new PropertyValueFactory<>("cutPartCode"));
+
         cutTable.setItems(cutList);
     }
 
@@ -81,50 +83,53 @@ public class Controller implements Initializable  {
         }
         else
         {
-            s.setLength(Double.parseDouble(sheetInputL.getText()));
-            s.setWidth(Double.parseDouble(sheetInputW.getText()));
-            rectSheet.setVisible(true);
-            rectSheet.setHeight(s.getLength());
-            rectSheet.setWidth(s.getWidth());
-            recPane.setPrefHeight(s.getLength());
-            recPane.setPrefWidth(s.getWidth());
+            double x = Double.parseDouble(sheetInputW.getText());
+            double y = Double.parseDouble(sheetInputL.getText());
+            if(x > 0 && y > 0) {
+                s.setLength(Double.parseDouble(sheetInputL.getText()));
+                s.setWidth(Double.parseDouble(sheetInputW.getText()));
+                rectSheet.setVisible(true);
+                rectSheet.setHeight(s.getLength());
+                rectSheet.setWidth(s.getWidth());
+                recPane.setPrefHeight(s.getLength());
+                recPane.setPrefWidth(s.getWidth());
+            }
+            else {
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setContentText("Sheet size can NOT be negative");
+                a.showAndWait();
+            }
         }
     }
     //Creates the cut and put it in the observablelist of Cuts
     public void cutMaker(ActionEvent actionEvent) {
         //if any value is empty, create an error message
-        if(cutInputL.getText().isEmpty() || cutInputW.getText().isEmpty() || cutInputLabel.getText().isEmpty())
-        {
+        double x = Double.parseDouble(cutInputW.getText());
+        double y = Double.parseDouble(cutInputL.getText());
+        if (cutInputL.getText().isEmpty() || cutInputW.getText().isEmpty() || cutInputLabel.getText().isEmpty()) {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("You do not have a value for the Cut");
             a.showAndWait();
+        } else if (x <= 0 || y <= 0)
+        {
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("Cut cannot be negative!");
+            a.showAndWait();
+        }
+        else if (x > rectSheet.getWidth() || y > rectSheet.getHeight())
+        {
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("Cut can NOT be larger than the sheet");
+            a.showAndWait();
         }
         else {
-            Cut c = new Cut(Double.parseDouble(cutInputL.getText()),Double.parseDouble(cutInputW.getText()),cutInputLabel.getText());
+            Cut c = new Cut(x,y,cutInputLabel.getText());
             c.rec.setFill(Color.CYAN);
             c.rec.setStroke(Color.GRAY);
             cutList.add(c);
         }
 
     }
-    /*
-    private Rectangle findLargestRectangle() {
-        Rectangle largest = null;
-        double largestArea = 0;
-
-        for (Node node : recPane.getChildren()) {
-            if (node instanceof Rectangle) {
-                Rectangle rect = (Rectangle) node;
-                double area = rect.getWidth() * rect.getHeight();
-                if (area > largestArea) {
-                    largest = rect;
-                    largestArea = area;
-                }
-            }
-        }
-
-        return largest;
-    }*/
     //Prints the rectangles on screen, and puts the labels in the center of each cut.
     public void printRec()
     {
@@ -175,38 +180,41 @@ public class Controller implements Initializable  {
 
     }
 
+    /*
     //Making a class that will organize the cutList to have it ascending order based on
     //Area, taking the area of each cut, putting it in its own value and adding it to its own
     //ObservableList and then making it back.
-    public ObservableList organizeCutList(ObservableList<Cut> cl)
-    {
-        int size = cl.size();
-        int ind = 0;
-        ObservableList<Cut> finale = FXCollections.observableArrayList();
-        do {
-            double largeArea=0.0;
+     public ObservableList organizeCutList(ObservableList<Cut> cl)
+     {
+         int size = cl.size();
+         int ind = 0;
+         ObservableList<Cut> finale = FXCollections.observableArrayList();
+         do {
+             double largeArea=0.0;
 
-            for(Cut cut : cl)
-            {
-                if(cut.getArea() > largeArea)
-                {
-                    ind = cl.indexOf(cut);
-                    largeArea = cut.getArea();
-                }
-            }
-            finale.add(cl.get(ind));
-            cl.remove(cl.get(ind));
-        }while(finale.size() != size);
+             for(Cut cut : cl)
+             {
+                 if(cut.getArea() > largeArea)
+                 {
+                     ind = cl.indexOf(cut);
+                     largeArea = cut.getArea();
+                 }
+             }
+             finale.add(cl.get(ind));
+             cl.remove(cl.get(ind));
+         }while(finale.size() != size);
 
-        return finale;
-    }
-
+         return finale;
+     }
+ */
     //The activation of the whole algorithm that was made, it organizes the cut list in descending order, puts them on the
     //tableview, then finds their x and y, then prints.
     public void optimize(ActionEvent actionEvent) {
-        //cutList = organizeCutList(cutList);
         cutTable.setItems(cutList);
         displayCuts(cutList);
         printRec();
+      /*  for(Cut cut: cutList) {
+            System.out.println("Length: " + cut.getLength() + "  Width: " + cut.getWidth());
+        }*/
     }
 }

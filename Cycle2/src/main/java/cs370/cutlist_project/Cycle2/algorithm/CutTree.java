@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 
 public class CutTree {
-    public class Node {
 
+    public class Node {
         @Getter
         Node widthAxis;
 
@@ -40,9 +40,14 @@ public class CutTree {
         this.sheet = null;
     }
 
-    CutTree(Sheet sheet) {
+    public CutTree(Sheet sheet) {
         this.root = null;
         this.sheet = sheet;
+    }
+
+
+    public Node getRoot() {
+        return root;
     }
 
     /**
@@ -54,13 +59,15 @@ public class CutTree {
      * @param sheetLength The length of the sheet or the length of the cut if placing the cut on the width axis
      * @return The new node that contains the cut object
      */
+    //RecursiveAdd will take a Node, cut, and 3 double objects one being the totalCutLength, totalCutWidth and sheetLength
     private Node recursiveAdd(Node currentNode, Cut addedCut, double totalCutsLength, double totalCutsWidth,
                               double sheetLength) {
+        //if node object is null, make new node from the cut object brought in
         if (currentNode == null) {
             return new Node(addedCut);
         }
 
-        System.out.println(totalCutsWidth + "\t" + totalCutsLength);
+       // System.out.println(totalCutsWidth + "\t" + totalCutsLength);
 
         double leftOverLength = sheetLength - totalCutsLength;
         double leftOverWidth = sheet.getWidth() - totalCutsWidth;
@@ -127,5 +134,3 @@ public class CutTree {
     }
 
 }
-
-
