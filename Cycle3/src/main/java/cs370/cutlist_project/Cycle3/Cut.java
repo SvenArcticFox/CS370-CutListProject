@@ -1,5 +1,8 @@
 package cs370.cutlist_project.Cycle3;
 
+
+import javafx.scene.control.Button;
+import javafx.scene.shape.Rectangle;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +24,13 @@ public class Cut {
     @Setter
     @Getter
     private String notes;
+    @Getter
+    @Setter
+    public Rectangle rec = new Rectangle(0,0);
+    @Getter
+    @Setter
+    public Button delBut;
+
 
     public Cut(double length, double width) {
         this.length = length;
@@ -31,6 +41,8 @@ public class Cut {
     public Cut(double length, double width, String cutPartCode) {
         this.length = length;
         this.width = width;
+        rec.setHeight(length);
+        rec.setWidth(width);
         this.cutPartCode = cutPartCode;
         this.area = this.length * this.width;
     }
