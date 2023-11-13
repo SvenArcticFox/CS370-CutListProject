@@ -46,10 +46,6 @@ public class CutTree {
     }
 
 
-    public Node getRoot() {
-        return root;
-    }
-
     /**
      *
      * @param currentNode The current node that is being worked with in the tree
