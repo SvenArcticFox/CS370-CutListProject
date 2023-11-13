@@ -1,0 +1,2 @@
+Manifest-Version: 1.0
+Main-Class: cs370.cutlist_project.Cycle2.Main
