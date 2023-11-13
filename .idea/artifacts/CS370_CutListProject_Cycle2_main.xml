@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="CS370-CutListProject.Cycle2.main">
+    <output-path>$PROJECT_DIR$/out/artifacts/CS370_CutListProject_Cycle2_main</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="cs370.cutlist_project.Cycle2.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="CS370_CutListProject_Cycle2_main.jar">
+        <element id="module-output" name="CS370-CutListProject.Cycle2.main" />
+      </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/Cycle2/src/main/resources" />
+    </root>
+  </artifact>
+</component>
