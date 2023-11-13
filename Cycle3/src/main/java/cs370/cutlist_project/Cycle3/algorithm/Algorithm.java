@@ -9,9 +9,9 @@ public class Algorithm {
         quickSort(cuts, 0, cuts.length -1);
         CutTree cutTree = new CutTree(sheet);
 
-        for (Cut cut : cuts) {
+      /*  for (Cut cut : cuts) {
             System.out.println(cut.getArea() + "\t" + cut.getWidth() + "\t" + cut.getLength());
-        }
+        }*/
 
         for (Cut cut : cuts) {
             cutTree.add(cut);
@@ -20,7 +20,7 @@ public class Algorithm {
         return cutTree;
     }
 
-    private static void quickSort(Cut arr[], int lowIndex, int highIndex) {
+    private static void quickSort(Cut[] arr, int lowIndex, int highIndex) {
         if (lowIndex < highIndex) {
             int partitionIndex = partition(arr, lowIndex, highIndex);
 
@@ -29,7 +29,7 @@ public class Algorithm {
         }
     }
 
-    private static int partition(Cut arr[], int lowIndex, int highIndex) {
+    private static int partition(Cut[] arr, int lowIndex, int highIndex) {
         Cut pivot = arr[highIndex];
         int i = (lowIndex-1);
 
@@ -40,11 +40,12 @@ public class Algorithm {
                 Cut swapTemp = arr[i];
                 arr[i] = arr[j];
                 arr[j] = swapTemp;
+
             }
         }
 
-        Cut swapTemp = arr[i+1];
-        arr[i+1] = arr[highIndex];
+        Cut swapTemp = arr[i + 1];
+        arr[i+1] =  arr[highIndex];
         arr[highIndex] = swapTemp;
 
         return i+1;
@@ -52,10 +53,15 @@ public class Algorithm {
 
     public static void main(String[] args) {
         Sheet sheet = new Sheet(1000, 1000);
-        Cut[] cuts = new Cut[2];
+        Cut[] cuts = new Cut[6];
 
         cuts[0] = new Cut(500, 500);
         cuts[1] = new Cut(200, 200);
+        cuts[2] = new Cut(400, 400);
+        cuts[3] = new Cut(75, 75);
+        cuts[4] = new Cut(400, 400);
+        cuts[5] = new Cut(50, 50);
+
 
         /*
         cuts[0] = new Cut(10, 20);
@@ -68,10 +74,9 @@ public class Algorithm {
         cuts[7] = new Cut(12, 3);
         cuts[8] = new Cut(18, 9);
         cuts[9] = new Cut(5, 6);
-
          */
 
         CutTree cutTree = entrance(sheet, cuts);
-        cutTree.printTree();
+
     }
 }
