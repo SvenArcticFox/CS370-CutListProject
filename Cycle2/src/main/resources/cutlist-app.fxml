@@ -26,9 +26,9 @@
                   <TextField fx:id="cutInputL" layoutX="14.0" layoutY="257.0" promptText="Length" />
                   <TextField fx:id="cutInputW" layoutX="14.0" layoutY="301.0" promptText="Width" />
                   <TextField fx:id="cutInputLabel" layoutX="14.0" layoutY="347.0" promptText="Label" />
-                  <Button fx:id="sheetBut" layoutX="48.0" layoutY="169.0" mnemonicParsing="false" onAction="#sheetMaker" text="Make Sheet" />
-                  <Button fx:id="cutBut" layoutX="21.0" layoutY="400.0" mnemonicParsing="false" onAction="#cutMaker" text="Make Cut" />
-                  <Button fx:id="optBut" layoutX="130.0" layoutY="478.0" mnemonicParsing="false" onAction="#optimize" text="Optimize" />
+                  <Button fx:id="sheetBut" layoutX="20.0" layoutY="172.0" mnemonicParsing="false" onAction="#sheetMaker" text="Make Sheet" />
+                  <Button fx:id="cutBut" layoutX="20.0" layoutY="386.0" mnemonicParsing="false" onAction="#cutMaker" text="Make Cut" />
+                  <Button fx:id="optBut" layoutX="66.0" layoutY="470.0" mnemonicParsing="false" onAction="#optimize" text="Optimize" />
                   <Label alignment="CENTER" layoutX="14.0" layoutY="213.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Cut" textAlignment="CENTER" wrapText="false">
                      <font>
                         <Font size="18.0" fx:id="x111" />
