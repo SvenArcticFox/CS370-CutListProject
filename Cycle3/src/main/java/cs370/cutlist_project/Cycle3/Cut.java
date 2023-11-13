@@ -36,6 +36,7 @@ public class Cut {
         this.length = length;
         this.width = width;
         this.area = this.length * this.width;
+        this.delBut = new Button("Delete");
     }
 
     public Cut(double length, double width, String cutPartCode) {
@@ -45,6 +46,7 @@ public class Cut {
         rec.setWidth(width);
         this.cutPartCode = cutPartCode;
         this.area = this.length * this.width;
+        this.delBut = new Button("Delete");
     }
 
     public void setLength(double length) {
@@ -56,4 +58,6 @@ public class Cut {
         this.width = width;
         this.area = this.length * this.width;
     }
+
+
 }
