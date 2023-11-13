@@ -1,10 +1,8 @@
 plugins {
     id("java")
-    application
 }
 
-
-group = "cs370.cutlist_project"
+group = "cs370.cutlist_project.Cycle3"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -24,12 +22,4 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-}
-
-tasks.jar {
-    manifest {
-        attributes(
-                "Main-Class" to "cs370.cutlist_project.Main"
-        )
-    }
 }
