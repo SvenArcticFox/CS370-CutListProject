@@ -92,7 +92,7 @@ public class Controller implements Initializable  {
             }
             else {
                 a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("Sheet size can NOT be negative");
+                a.setContentText("Sheet size can NOT be negative OR zero");
                 a.showAndWait();
             }
         }
