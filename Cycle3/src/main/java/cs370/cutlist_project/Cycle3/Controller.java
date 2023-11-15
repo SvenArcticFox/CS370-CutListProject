@@ -58,7 +58,6 @@ public class Controller implements Initializable  {
     @FXML
     private TableColumn<Cut, String> labelCol;
 
-
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     //Initializes the table view, allowing for the values of the cuts to be shown.
     @Override
@@ -66,7 +65,6 @@ public class Controller implements Initializable  {
         lengthCol.setCellValueFactory(new PropertyValueFactory<>("length"));
         widthCol.setCellValueFactory(new PropertyValueFactory<>("width"));
         labelCol.setCellValueFactory(new PropertyValueFactory<>("cutPartCode"));
-
         cutTable.setItems(cutList);
     }
 
@@ -94,11 +92,12 @@ public class Controller implements Initializable  {
             }
             else {
                 a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("Sheet size can NOT be negative");
+                a.setContentText("Sheet size can NOT be negative OR zero");
                 a.showAndWait();
             }
         }
     }
+
     //Creates the cut and put it in the observablelist of Cuts
     public void cutMaker(ActionEvent actionEvent) {
         //if any value is empty, create an error message
@@ -214,5 +213,19 @@ public class Controller implements Initializable  {
       /*  for(Cut cut: cutList) {
             System.out.println("Length: " + cut.getLength() + "  Width: " + cut.getWidth());
         }*/
+    }
+
+    public void deleteCut(ActionEvent actionEvent) {
+        Cut highlighted = cutTable.getSelectionModel().getSelectedItem();
+        int find = 0;
+        for(Cut cut: cutList)
+        {
+            if (cut == highlighted)
+            {
+                find = cutList.indexOf(cut);
+            }
+        }
+        cutList.remove(find);
+        cutTable.getItems().remove(highlighted);
     }
 }
