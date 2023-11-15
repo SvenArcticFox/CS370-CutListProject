@@ -108,7 +108,14 @@ public class Controller implements Initializable  {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("You do not have a value for the Cut");
             a.showAndWait();
-        } else if (x <= 0 || y <= 0)
+        }
+        else if (sheetInputW.getText().isEmpty() || sheetInputL.getText().isEmpty()) {
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("You need a Sheet to make a Cut...");
+            a.showAndWait();
+        }
+
+        else if (x <= 0 || y <= 0)
         {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("Cut cannot be negative!");
