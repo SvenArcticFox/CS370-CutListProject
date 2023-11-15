@@ -76,6 +76,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
+                  <Button fx:id="delBut" mnemonicParsing="false" onAction="#deleteCut" text="Delete" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                </children>
             </GridPane>
       </items>
