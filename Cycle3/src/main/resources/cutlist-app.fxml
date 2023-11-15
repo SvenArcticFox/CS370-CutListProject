@@ -11,27 +11,30 @@
       <items>
         <AnchorPane>
           <children>
-            <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Input" textAlignment="CENTER" wrapText="false">
+            <Label alignment="CENTER" layoutX="8.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Input" textAlignment="CENTER" wrapText="false">
               <font>
                 <Font size="18.0" fx:id="x1" />
               </font>
             </Label>
-                  <TextField fx:id="sheetInputL" layoutX="14.0" layoutY="87.0" promptText="Length" />
-                  <TextField fx:id="sheetInputW" layoutX="14.0" layoutY="132.0" promptText="Width" />
-                  <Label alignment="CENTER" layoutX="14.0" layoutY="50.0" minWidth="60.0" prefHeight="27.0" prefWidth="150.0" style="&#10;" text="Sheet" textAlignment="CENTER" wrapText="false">
+                  <TextField fx:id="sheetInputL" layoutX="35.0" layoutY="99.0" promptText="Length" />
+                  <TextField fx:id="sheetInputW" layoutX="35.0" layoutY="142.0" promptText="Width" />
+                  <Label alignment="CENTER" layoutX="36.0" layoutY="72.0" minWidth="60.0" prefHeight="27.0" prefWidth="150.0" style="&#10;" text="Sheet" textAlignment="CENTER" wrapText="false">
                      <font>
-                        <Font size="18.0" fx:id="x11" />
+                        <Font name="System Bold" size="18.0" fx:id="x11" />
                      </font>
                   </Label>
-                  <TextField fx:id="cutInputL" layoutX="14.0" layoutY="257.0" promptText="Length" />
-                  <TextField fx:id="cutInputW" layoutX="14.0" layoutY="301.0" promptText="Width" />
-                  <TextField fx:id="cutInputLabel" layoutX="14.0" layoutY="347.0" promptText="Label" />
-                  <Button fx:id="sheetBut" layoutX="48.0" layoutY="169.0" mnemonicParsing="false" onAction="#sheetMaker" text="Make Sheet" />
-                  <Button fx:id="cutBut" layoutX="21.0" layoutY="400.0" mnemonicParsing="false" onAction="#cutMaker" text="Make Cut" />
-                  <Button fx:id="optBut" layoutX="130.0" layoutY="478.0" mnemonicParsing="false" onAction="#optimize" text="Optimize" />
-                  <Label alignment="CENTER" layoutX="14.0" layoutY="213.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Cut" textAlignment="CENTER" wrapText="false">
+                  <TextField fx:id="cutInputL" layoutX="36.0" layoutY="274.0" promptText="Length" />
+                  <TextField fx:id="cutInputW" layoutX="36.0" layoutY="318.0" promptText="Width" />
+                  <TextField fx:id="cutInputLabel" layoutX="36.0" layoutY="362.0" promptText="Label" />
+                  <Button fx:id="sheetBut" layoutX="71.0" layoutY="181.0" mnemonicParsing="false" onAction="#sheetMaker" text="Make Sheet" />
+                  <Button fx:id="cutBut" layoutX="77.0" layoutY="402.0" mnemonicParsing="false" onAction="#cutMaker" text="Make Cut" />
+                  <Button fx:id="optBut" layoutX="72.0" layoutY="492.0" mnemonicParsing="false" onAction="#optimize" text="Optimize">
                      <font>
-                        <Font size="18.0" fx:id="x111" />
+                        <Font size="14.0" />
+                     </font></Button>
+                  <Label alignment="CENTER" layoutX="81.0" layoutY="247.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Cut" textAlignment="CENTER" wrapText="false">
+                     <font>
+                        <Font name="System Bold" size="18.0" fx:id="x111" />
                      </font>
                   </Label>
           </children>
