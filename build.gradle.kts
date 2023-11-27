@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    application
+    id("application")
 }
 
 
@@ -26,10 +26,10 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks.jar {
-    manifest {
-        attributes(
-                "Main-Class" to "cs370.cutlist_project.Main"
-        )
+application {
+    mainClass.set("cs370.cutlist_project.Main")
+    applicationDistribution.from("src/main/resources") {
+        include("*.fxml")
     }
 }
+

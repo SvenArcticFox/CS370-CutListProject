@@ -75,7 +75,7 @@ public class CutTree {
                 if (sheet.getWidth() - (currentNode.cut.getWidth() + currentNode.widthAxis.cut.getWidth() + totalCutsWidth)
                         >= addedCut.getWidth()) {
                     currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, addedCut, currentNode.cut.getLength(),
-                            currentNode.cut.getWidth() + addedCut.getWidth(),  currentNode.cut.getLength());
+                            currentNode.cut.getWidth() + addedCut.getWidth(),  sheet.getLength());
                 }
                 // If the leftover width is less than the width of the new cut, add it to the length axis
                 else {
