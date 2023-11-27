@@ -29,7 +29,7 @@ tasks.test {
 application {
     mainClass.set("cs370.cutlist_project.Main")
     applicationDistribution.from("src/main/resources") {
-        include("*.fxml")
+        include("*")
     }
 }
 
