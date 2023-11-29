@@ -10,6 +10,11 @@ import java.util.ArrayList;
 
 public class CutTree {
 
+    private Sheet sheet;
+    @Getter
+    private Node root;
+    private final ArrayList<Cut> reject = new ArrayList<>();
+
     public class Node {
         @Getter
         Node widthAxis;
@@ -20,6 +25,10 @@ public class CutTree {
         @Getter
         Cut cut;
 
+        //double leftOverWidth;
+        //double leftOverHeight;
+
+
         Node(Cut cut/*, Sheet sheet*/) {
             this.widthAxis = null;
             this.lengthAxis = null;
@@ -28,10 +37,8 @@ public class CutTree {
         }
 
     }
-    private Sheet sheet;
-    @Getter
-    private Node root;
-    private final ArrayList<Cut> reject = new ArrayList<>();
+
+
     //private double totalCutsWidth;
     //private double totalCutsLength;
 
