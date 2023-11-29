@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("application")
 }
 
 group = "cs370.cutlist_project.Cycle3"
@@ -22,4 +23,19 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass.set("cs370.cutlist_project.Cycle3.Main")
+    applicationDistribution.from("./src/main/resources") {
+        include("*")
+    }
+}
+
+tasks.jar {
+    manifest {
+        attributes(
+                "Main-Class" to application.mainClass
+        )
+    }
 }

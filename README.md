@@ -14,8 +14,7 @@ list for a sheet of plywood.
 1. Install Java runtime environment and Java developer kit.
    1. Download the FULL JDK and JRE for your OS here: https://bell-sw.com/pages/downloads/#jdk-8-lts
    2. Click on the drop down menu for your OS and select Full JDK. Download the installer.
-   3. Click on the drop down menu for your OS and select Full JRE. Download the installer.
-   4. Run the installers
+   3. Run the installers
 2. Download and install Gradle
    1. Download Gradle from https://gradle.org/install/
    2. Follow the Gradle instructions to install it.
