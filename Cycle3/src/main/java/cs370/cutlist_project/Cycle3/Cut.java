@@ -27,10 +27,18 @@ public class Cut {
     @Setter
     public Rectangle rec = new Rectangle(0,0);
 
+    @Getter
+    @Setter
+    private boolean placed;
+
+
+
+
     public Cut(double length, double width) {
         this.length = length;
         this.width = width;
         this.area = this.length * this.width;
+        placed = false;
     }
 
     public Cut(double length, double width, String cutPartCode) {
@@ -40,6 +48,8 @@ public class Cut {
         rec.setWidth(width);
         this.cutPartCode = cutPartCode;
         this.area = this.length * this.width;
+        placed = false;
+
     }
 
     public void setLength(double length) {
