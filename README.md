@@ -28,4 +28,18 @@ list for a sheet of plywood.
    3. Select the cloned repo from the file browser and click open
    4. Wait for IntelliJ to index JDK files, download libraries, and generate Gradle files
 4. Build the project
-   1. 
+   1. Click on the gear in the top right corner of the IntelliJ window
+   2. Click on project structure
+   3. Click on artifacts on the left side of the setting window
+   4. Click on the plus on the top of the window, then hover over JavaFX application, then click on "From Module..."
+   5. Scroll down until you see CS370-CutListProject.Cycle3.main, click on okay
+   6. Click on the plus inside the output layout section of the artifact page
+   7. Click on directory contents, then select /path/to/repo/Cycle3/main/resources. This will include the fxml file for gui layout.
+   8. Click on the JavaFX tab
+   9. Click on the folder icon next to Application Class. Select "Main (cs370.cutlist_project.Cycle3".
+   10. Scroll down until you see "Native Bundle"
+   11. Click on the drop-down and select "all"
+   12. Click on okay on the ok button on the bottom right corner of the window
+   13. On the top of the IDE window, click on the build menu, then click on build artifacts
+   14. Click on the name of the artifact that you made
+   15. The application is now built in /path/to/repo/out/artifacts/name-of-artifact/
