@@ -10,6 +10,11 @@ import java.util.ArrayList;
 
 public class CutTree {
 
+    private Sheet sheet;
+    @Getter
+    private Node root;
+    private final ArrayList<Cut> reject = new ArrayList<>();
+
     public class Node {
         @Getter
         Node widthAxis;
@@ -20,18 +25,23 @@ public class CutTree {
         @Getter
         Cut cut;
 
-        Node(Cut cut/*, Sheet sheet*/) {
+        double leftOverWidth;
+        double leftOverLength;
+
+
+
+        Node(Cut cut, double leftOverWidth, double leftOverLength) {
             this.widthAxis = null;
             this.lengthAxis = null;
             this.cut = cut;
+            this.leftOverWidth = leftOverWidth;
+            this.leftOverLength = leftOverLength;
+
             //this.sheet = sheet;
         }
 
     }
-    private Sheet sheet;
-    @Getter
-    private Node root;
-    private final ArrayList<Cut> reject = new ArrayList<>();
+
     //private double totalCutsWidth;
     //private double totalCutsLength;
 
@@ -50,59 +60,80 @@ public class CutTree {
      *
      * @param currentNode The current node that is being worked with in the tree
      * @param addedCut The cut object to be placed in the tree
-     * @param totalCutsLength The total length of all the cuts
-     * @param totalCutsWidth The total width of all the cuts
      * @param sheetLength The length of the sheet or the length of the cut if placing the cut on the width axis
      * @return The new node that contains the cut object
      */
     //RecursiveAdd will take a Node, cut, and 3 double objects one being the totalCutLength, totalCutWidth and sheetLength
-    private Node recursiveAdd(Node currentNode, Cut addedCut, double totalCutsLength, double totalCutsWidth,
+    private Node recursiveAdd(Node currentNode, Cut addedCut,
                               double sheetLength) {
         //if node object is null, make new node from the cut object brought in
         if (currentNode == null) {
-            return new Node(addedCut);
+            addedCut.setPlaced(true);
+            return new Node(addedCut, sheet.getWidth() - addedCut.getWidth(), sheetLength - addedCut.getLength());
         }
+
 
         // System.out.println(totalCutsWidth + "\t" + totalCutsLength);
 
-        double leftOverLength = sheet.getLength() - totalCutsLength;
-        double leftOverWidth = sheet.getWidth() - totalCutsWidth;
 
-        if (addedCut.getWidth() <= leftOverWidth && addedCut.getLength() <= currentNode.cut.getLength()) {
-            //Cut sheet off by the length of the last cut
-            if (currentNode.widthAxis != null) {
+            if (currentNode.widthAxis == null) {
+                if (addedCut.getWidth() <= currentNode.leftOverWidth && addedCut.getLength() <= sheetLength) {
+                    currentNode.widthAxis = new Node(addedCut, currentNode.leftOverWidth - addedCut.getWidth(),
+                            currentNode.leftOverLength + (currentNode.cut.getLength() - addedCut.getLength()));
+                    addedCut.setPlaced(true);
+                    return currentNode;
+                }
+
+
+
+            }
+            ///////////////////////////////////////////////
+            else if (currentNode.widthAxis != null) {
                 //"looks ahead" and checks to see if the leftover width is greater than or equal to the width of the new cut
-                if (sheet.getWidth() - (currentNode.cut.getWidth() + currentNode.widthAxis.cut.getWidth() + totalCutsWidth)
-                        >= addedCut.getWidth()) {
-                    currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, addedCut, currentNode.cut.getLength(),
-                            currentNode.cut.getWidth() + addedCut.getWidth(),  sheet.getLength());
+
+                if (currentNode.widthAxis.leftOverWidth >= addedCut.getWidth() && addedCut.getLength() <= sheetLength) {
+                    currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, addedCut, sheetLength);
+                    return currentNode;
                 }
                 // If the leftover width is less than the width of the new cut, add it to the length axis
-                else {
-                    currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut,
-                            currentNode.cut.getLength() + addedCut.getLength(), totalCutsWidth, sheet.getLength());
+                else if (currentNode.widthAxis.leftOverLength - currentNode.leftOverLength >= addedCut.getLength() &&
+                        currentNode.leftOverWidth >= addedCut.getWidth()) {
+                    currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, addedCut,
+                            sheetLength);
+                    return currentNode;
+                }
+
+            if (currentNode.lengthAxis == null && !addedCut.isPlaced()) {
+                if (currentNode.leftOverLength >= addedCut.getLength() && addedCut.getWidth() <= sheet.getWidth()) {
+                    currentNode.lengthAxis = new Node(addedCut, currentNode.leftOverWidth +
+                            (currentNode.cut.getWidth() - addedCut.getWidth()), currentNode.leftOverLength - addedCut.getLength());
+                    addedCut.setPlaced(true);
+                    return currentNode;
                 }
             }
-            // If the width axis is null, just recursively add the cut to it.
-            else {
-                currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, addedCut, currentNode.cut.getLength(),
-                        currentNode.cut.getWidth() + addedCut.getWidth(),  currentNode.cut.getLength());
-            }
+            //&&&????///////////////////////////////
+           else if (currentNode.lengthAxis != null && !addedCut.isPlaced()) {
+                if (currentNode.lengthAxis.leftOverLength >= addedCut.getLength() && addedCut.getWidth() <= sheet.getWidth()) {
+                    currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut, sheetLength);
+                    return currentNode;
+                } else if (currentNode.lengthAxis.leftOverWidth - currentNode.leftOverLength >= addedCut.getLength() &&
+                        currentNode.leftOverLength >= addedCut.getLength()) {
+                    currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut,
+                            sheetLength);
+                    return currentNode;
+                }
 
-        }
-        else if (addedCut.getLength() <= leftOverLength) {
-            currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut,
-                    currentNode.cut.getLength() + addedCut.getLength(), totalCutsWidth, sheet.getLength());
-        }
+            }
         else {
-            return currentNode;
+            reject.add(addedCut);
         }
 
         return currentNode;
+
     }
 
     public void add(Cut cut) {
-        this.root = recursiveAdd(root, cut, cut.getLength(), cut.getWidth(), sheet.getLength());
+        this.root = recursiveAdd(root, cut, sheet.getLength());
 
     }
 
