@@ -103,33 +103,32 @@ public class CutTree {
                     return currentNode;
                 }
 
-            if (currentNode.lengthAxis == null && !addedCut.isPlaced()) {
-                if (currentNode.leftOverLength >= addedCut.getLength() && addedCut.getWidth() <= sheet.getWidth()) {
-                    currentNode.lengthAxis = new Node(addedCut, currentNode.leftOverWidth +
-                            (currentNode.cut.getWidth() - addedCut.getWidth()), currentNode.leftOverLength - addedCut.getLength());
-                    addedCut.setPlaced(true);
-                    return currentNode;
+                if (currentNode.lengthAxis == null && !addedCut.isPlaced()) {
+                    if (currentNode.leftOverLength >= addedCut.getLength() && addedCut.getWidth() <= sheet.getWidth()) {
+                        currentNode.lengthAxis = new Node(addedCut, currentNode.leftOverWidth +
+                                (currentNode.cut.getWidth() - addedCut.getWidth()), currentNode.leftOverLength - addedCut.getLength());
+                        addedCut.setPlaced(true);
+                        return currentNode;
+                    }
                 }
-            }
-            //&&&????///////////////////////////////
-           else if (currentNode.lengthAxis != null && !addedCut.isPlaced()) {
-                if (currentNode.lengthAxis.leftOverLength >= addedCut.getLength() && addedCut.getWidth() <= sheet.getWidth()) {
-                    currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut, sheetLength);
-                    return currentNode;
-                } else if (currentNode.lengthAxis.leftOverWidth - currentNode.leftOverLength >= addedCut.getLength() &&
-                        currentNode.leftOverLength >= addedCut.getLength()) {
-                    currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut,
-                            sheetLength);
-                    return currentNode;
+                //&&&????///////////////////////////////
+                else if (currentNode.lengthAxis != null && !addedCut.isPlaced()) {
+                    if (currentNode.lengthAxis.leftOverLength >= addedCut.getLength() && addedCut.getWidth() <= sheet.getWidth()) {
+                        currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut, sheetLength);
+                        return currentNode;
+                    } else if (currentNode.lengthAxis.leftOverWidth - currentNode.leftOverLength >= addedCut.getLength() &&
+                            currentNode.leftOverLength >= addedCut.getLength()) {
+                        currentNode.lengthAxis = recursiveAdd(currentNode.lengthAxis, addedCut,
+                                sheetLength);
+                        return currentNode;
+                    }
+
+                } else {
+                    reject.add(addedCut);
                 }
 
             }
-        else {
-            reject.add(addedCut);
-        }
-
         return currentNode;
-
     }
 
     public void add(Cut cut) {
