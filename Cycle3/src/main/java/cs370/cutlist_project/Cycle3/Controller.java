@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
@@ -58,6 +59,11 @@ public class Controller implements Initializable  {
     @FXML
     private TableColumn<Cut, String> labelCol;
 
+    @FXML
+    private TableColumn<Cut, Double> xCol;
+    @FXML
+    private TableColumn<Cut, Double> yCol;
+
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     //Initializes the table view, allowing for the values of the cuts to be shown.
     @Override
@@ -65,6 +71,9 @@ public class Controller implements Initializable  {
         lengthCol.setCellValueFactory(new PropertyValueFactory<>("length"));
         widthCol.setCellValueFactory(new PropertyValueFactory<>("width"));
         labelCol.setCellValueFactory(new PropertyValueFactory<>("cutPartCode"));
+        xCol.setCellValueFactory(new PropertyValueFactory<>("rec.getX()"));
+        yCol.setCellValueFactory(new PropertyValueFactory<>("rec.getY()"));
+
         cutTable.setItems(cutList);
     }
 
@@ -107,7 +116,14 @@ public class Controller implements Initializable  {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("You do not have a value for the Cut");
             a.showAndWait();
-        } else if (x <= 0 || y <= 0)
+        }
+        else if (sheetInputW.getText().isEmpty() || sheetInputL.getText().isEmpty()) {
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setContentText("You need a Sheet to make a Cut...");
+            a.showAndWait();
+        }
+
+        else if (x <= 0 || y <= 0)
         {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("Cut cannot be negative!");
@@ -134,7 +150,8 @@ public class Controller implements Initializable  {
         {
             recPane.getChildren().add(cut.rec);
             Label l = new Label(cut.getCutPartCode());
-            l.relocate(cut.rec.getX() + (cut.rec.getWidth()/2) -10, cut.rec.getY()+(cut.rec.getHeight()/2) - 10);
+            l.setAlignment(Pos.CENTER);
+            l.relocate(cut.rec.getX() + (cut.rec.getWidth()/2)-10, cut.rec.getY()+(cut.rec.getHeight()/2)-10);
             recPane.getChildren().add(l);
         }
     }

@@ -75,6 +75,7 @@ public class CutTree {
 
         // System.out.println(totalCutsWidth + "\t" + totalCutsLength);
 
+
             if (currentNode.widthAxis == null) {
                 if (addedCut.getWidth() <= currentNode.leftOverWidth && addedCut.getLength() <= sheetLength) {
                     currentNode.widthAxis = new Node(addedCut, currentNode.leftOverWidth - addedCut.getWidth(),
@@ -83,10 +84,13 @@ public class CutTree {
                     return currentNode;
                 }
 
+
+
             }
             ///////////////////////////////////////////////
             else if (currentNode.widthAxis != null) {
                 //"looks ahead" and checks to see if the leftover width is greater than or equal to the width of the new cut
+
                 if (currentNode.widthAxis.leftOverWidth >= addedCut.getWidth() && addedCut.getLength() <= sheetLength) {
                     currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, addedCut, sheetLength);
                     return currentNode;
@@ -98,10 +102,6 @@ public class CutTree {
                             sheetLength);
                     return currentNode;
                 }
-
-
-            }
-
 
             if (currentNode.lengthAxis == null && !addedCut.isPlaced()) {
                 if (currentNode.leftOverLength >= addedCut.getLength() && addedCut.getWidth() <= sheet.getWidth()) {
@@ -124,7 +124,6 @@ public class CutTree {
                 }
 
             }
-
         else {
             reject.add(addedCut);
         }

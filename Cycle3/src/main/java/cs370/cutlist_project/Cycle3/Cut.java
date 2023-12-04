@@ -26,9 +26,12 @@ public class Cut {
     @Getter
     @Setter
     public Rectangle rec = new Rectangle(0,0);
+
     @Getter
     @Setter
     private boolean placed;
+
+
 
 
     public Cut(double length, double width) {
