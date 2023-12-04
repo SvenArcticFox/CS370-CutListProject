@@ -59,10 +59,6 @@ public class Controller implements Initializable  {
     @FXML
     private TableColumn<Cut, String> labelCol;
 
-    @FXML
-    private TableColumn<Cut, Double> xCol;
-    @FXML
-    private TableColumn<Cut, Double> yCol;
 
     ObservableList<Cut> cutList = FXCollections.observableArrayList();
     //Initializes the table view, allowing for the values of the cuts to be shown.
@@ -71,8 +67,6 @@ public class Controller implements Initializable  {
         lengthCol.setCellValueFactory(new PropertyValueFactory<>("length"));
         widthCol.setCellValueFactory(new PropertyValueFactory<>("width"));
         labelCol.setCellValueFactory(new PropertyValueFactory<>("cutPartCode"));
-        xCol.setCellValueFactory(new PropertyValueFactory<>("rec.getX()"));
-        yCol.setCellValueFactory(new PropertyValueFactory<>("rec.getY()"));
 
         cutTable.setItems(cutList);
     }

@@ -83,9 +83,6 @@ public class CutTree {
                 addedCut.setPlaced(true);
                 return currentNode;
             }
-
-
-
         }
         ///////////////////////////////////////////////
         else if (currentNode.widthAxis != null) {
@@ -95,6 +92,7 @@ public class CutTree {
                 currentNode.widthAxis = recursiveAdd(currentNode.widthAxis, addedCut, sheetLength);
                 return currentNode;
             }
+
             // If the leftover width is less than the width of the new cut, add it to the length axis
             else if (currentNode.widthAxis.leftOverLength - currentNode.leftOverLength >= addedCut.getLength() &&
                     currentNode.leftOverWidth >= addedCut.getWidth()) {
@@ -111,6 +109,7 @@ public class CutTree {
                 addedCut.setPlaced(true);
                 return currentNode;
             }
+
         }
         //&&&????///////////////////////////////
         else if (currentNode.lengthAxis != null && !addedCut.isPlaced()) {
