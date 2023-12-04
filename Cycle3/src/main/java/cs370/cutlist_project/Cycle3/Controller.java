@@ -120,7 +120,7 @@ public class Controller implements Initializable  {
             a.showAndWait();
         }
         else {
-            Cut c = new Cut(x,y,cutInputLabel.getText());
+            Cut c = new Cut(y,x,cutInputLabel.getText());
             c.rec.setFill(Color.CYAN);
             c.rec.setStroke(Color.GRAY);
             cutList.add(c);
